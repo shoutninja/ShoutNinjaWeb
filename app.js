@@ -6,7 +6,7 @@ app.config(function($routeProvider) {
     $routeProvider
     .when( '/events', {
         controller: 'ninja.shout.index.events',
-        templateUrl: 'view_main.html'
+        templateUrl: 'view_events.html'
     })
     .when( '/events/:event_id', {
         controller: 'ninja.shout.index.event',
@@ -46,5 +46,5 @@ app.controller("ninja.shout.index.events",["$scope","$location","ninja.shout.eve
 }]);
 
 app.controller("ninja.shout.index.event",["$scope","$routeParams","ninja.shout.events",function($scope,$routeParams,events) {
-    $scope.event=events[$routeParams.event_id];
+    $scope.event=events.$getRecord($routeParams.event_id);
 }]);
