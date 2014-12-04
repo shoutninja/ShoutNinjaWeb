@@ -1,0 +1,19 @@
+<table>
+  <tbody>
+    <tr>
+      <td><span>Title</span></td>
+      <td><span>Description</span></td>
+    </tr>
+    <tr ng-repeat="event in events">
+      <td><span ng-bind="event.name"></span></td>
+      <td><span ng-bind="event.description"></span></td>
+        <td class="btn btn-info"><a ng-click="detailEvent(event)">More Info</a></td>
+        <td class="btn btn-danger" ng-click="deleteEvent(event)">Delete</td>
+    </tr>
+  </tbody>
+</table>
+<form>
+  Name: <input type="text" ng-model="formData.name" class="form-controller"/>
+  Description: <input type="text" ng-model="formData.description"  class="form-controller"/>
+  <button ng-click="submitForm()" class="btn btn-default">Submit</button>
+</form>
