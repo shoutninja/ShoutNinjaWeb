@@ -4,13 +4,15 @@ app.value("ninja.shout.fbURL", "https://eakjb-shout-ninja2.firebaseio.com/events
  
 app.config(function($routeProvider) {
     $routeProvider
-    .when( '/', {
-        controller: 'ninja.shout.index.main',
+    .when( '/events', {
+        controller: 'ninja.shout.index.events',
         templateUrl: 'view_main.html'
     })
     .when( '/events/:event_id', {
         controller: 'ninja.shout.index.event',
         templateUrl: 'view_event.html'
+    }).when('/', {
+        redirectTo:'/events'
     })
     .otherwise({
       redirectTo:'/'
@@ -21,7 +23,7 @@ app.factory('ninja.shout.events', ["$firebase","ninja.shout.fbURL",function($fir
     return $firebase(new Firebase(fbURL)).$asArray();
 }]);
 
-app.controller("ninja.shout.index.main",["$scope","$location","ninja.shout.events",function ($scope,$location,events) {
+app.controller("ninja.shout.index.events",["$scope","$location","ninja.shout.events",function ($scope,$location,events) {
     $scope.events=events;
     
     $scope.submitForm = function () {
