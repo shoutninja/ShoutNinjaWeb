@@ -1,0 +1,20 @@
+body {
+    background-color: #ecf0f1;
+}
+.top {
+    background-color: #3498db;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 15%;
+    text-align: center;
+    width: 100%;
+    color: #ecf0f1;
+}
+.outer {
+    display: table;
+}
+.inner {
+    display: table-cell;
+    vertical-align: middle;
+}

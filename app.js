@@ -1,7 +1,7 @@
 var app = angular.module("ninja.shout",["ngRoute","firebase"]);
 
 app.value("ninja.shout.fbURL", "https://eakjb-shout-ninja2.firebaseio.com/events");
-
+ 
 app.config(function($routeProvider) {
     $routeProvider
     .when( '/', {
