@@ -3,10 +3,12 @@
         <title>Shout.Ninja</title>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.js"></script>
+        <script src="https://cdn.rawgit.com/Luegg/angularjs-scroll-glue/v2.0.2/src/scrollglue.js"></script>
         <script src="https://cdn.firebase.com/js/client/2.0.4/firebase.js"></script>
         <script src="https://cdn.firebase.com/libs/angularfire/0.9.0/angularfire.js"></script>
         <link rel="icon" type="image/x-icon" href="favicon.ico" />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="bootstrap.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="styles.css">
         <script src="/app.js"></script>
     </head>
@@ -16,7 +18,8 @@
                 <h1>Shout.Ninja</h1>
             </div>
         </div>
-        <!--<span class="label label-info">Made by Jake Billings and Henry Kaufman</span>-->
         <div ng-view></div>
+        <!--<span class="label label-info">Made by Jake Billings and Henry Kaufman</span>-->
+        <div ng-include="'view_chats.html'"></div>
     </body>
 </html>

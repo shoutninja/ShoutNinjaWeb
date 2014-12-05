@@ -18,3 +18,18 @@ body {
     display: table-cell;
     vertical-align: middle;
 }
+td {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.form-controller {
+    padding: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    border: 0;
+    background-color: #ecf0f1;
+}
+:focus {
+    outline: none;
+}

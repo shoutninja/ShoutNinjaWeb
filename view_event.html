@@ -1,3 +1,6 @@
+<h3>Event Info</h3>
 <span ng-bind="event_id"></span>
-<span ng-bind="event.name"></span>
-<span ng-bind="event.description"></span>
+<h2 ng-bind="event.name"></h2>
+<p ng-bind="event.description"></p>
+
+<span>Want to attend this event?<br>Hit up this person on <a ng-href="https://twitter.com/{{event.twitter}}">Twitter</a>!</span>
