@@ -2,7 +2,7 @@
 <table>
   <tbody>
     <tr>
-      <td><span></span></td>
+      <td><span>Votes</span></td>
       <td><span>Title</span></td>
       <td><span>Description</span></td>
     </tr>
@@ -10,9 +10,9 @@
       <div>
         <div>
           <td>
-            <i class="fa fa-arrow-circle-o-up"  style="float:left"ng-click="addVote(event)"></i>
-            <span class="vote" style="text-align:center" ng-bind="event.votes"></span>
-            <i class="fa fa-arrow-circle-o-down" style="float:right" ng-click="subtractVote(event)"></i>
+            <i class="fa fa-arrow-circle-o-up" ng-click="addVote(event)"></i>&nbsp;&nbsp;&nbsp;
+            <span class="vote" style="text-align:center" ng-bind="event.votes"></span>&nbsp;&nbsp;&nbsp;
+            <i class="fa fa-arrow-circle-o-down" ng-click="subtractVote(event)"></i>
           </td>
           <td><span ng-bind="event.name"></span></td>
           <td><span ng-bind="event.description"></span></td>

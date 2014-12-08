@@ -76,3 +76,6 @@ hr {
     height: 2px;
     background-color: #3498db;
 }
+::-webkit-scrollbar { 
+    display: none; 
+}
