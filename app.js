@@ -111,7 +111,9 @@ function ($scope,$location,defaults,events) {
     $scope.resetForm();
 }]);
 
-app.controller("ninja.shout.index.event",["$scope","$routeParams","ninja.shout.api.events",function($scope,$routeParams,events) {
+app.controller("ninja.shout.index.event",["$scope","$location","$routeParams","ninja.shout.api.events",
+function($scope,$location,$routeParams,events) {
+    $scope.$location=$location;
     events.$loaded(function () {
         $scope.event=events.$getRecord($routeParams.event_id);
     });

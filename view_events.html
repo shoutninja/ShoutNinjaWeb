@@ -1,24 +1,4 @@
-<h3>Create New</h3>
-<form>
-  <input type="text" ng-model="formData.name" class="form-controller" placeholder="Name"/>
-  <input type="text" ng-model="formData.description"  class="form-controller" placeholder="Description"/>
-  <div id="datetimepicker2" class="input-append">
-    <input data-format="MM/dd/yyyy HH:mm:ss PP" type="text"></input>
-    <span class="add-on">
-      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-      </i>
-    </span>
-  </div>
-  <script type="text/javascript">
-    $(function() {
-      $('#datetimepicker2').datetimepicker({
-        language: 'en',
-        pick12HourFormat: true
-      });
-    });
-  </script>
-  <button ng-click="submitForm()" class="btn btn-default">Submit</button>
-</form>
+<h3>Events</h3>
 <table>
   <tbody>
     <tr>
@@ -37,3 +17,9 @@
     </tr>
   </tbody>
 </table>
+<h3>Create New</h3>
+<form>
+  <input type="text" ng-model="formData.name" class="form-controller" placeholder="Name"/>
+  <input type="text" ng-model="formData.description"  class="form-controller" placeholder="Description"/>
+  <button ng-click="submitForm()" class="btn btn-default">Submit</button>
+</form>
