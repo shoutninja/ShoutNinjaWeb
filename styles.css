@@ -1,3 +1,4 @@
+/* ---------Body styling--------- */
 body {
     background-color: #ecf0f1;
 }
@@ -37,9 +38,41 @@ td {
     float: left;
     width: 75%;
 }
-/*#new {*/
-/*    display: none;*/
-/*}*/
-/*#new:target {*/
-/*    display: block;*/
-/*}*/
+/* ---------Chat Styling--------- */
+.chat-text {
+    margin-left: 5%;
+    text-align: center;
+    line-height: 1.5em;
+    width: 60%;
+    border: none;
+    float: left;
+    height: 50px;
+}
+.addChatBtn {
+    height: 50px;
+    width: 25%;
+    float: right;
+    margin-right: 5%;
+}
+.chats {
+    height: 85%;
+    width: 25%;
+    float: right;
+}
+.profile-photo {
+    float: left;
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+}
+.content {
+    padding-left: 75px;
+}
+.username {
+    color: #3498db;
+}
+hr {
+    width: 50%;
+    height: 2px;
+    background-color: #3498db;
+}

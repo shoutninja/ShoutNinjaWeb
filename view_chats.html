@@ -1,6 +1,6 @@
 <div ng-controller="ninja.shout.index.chats" class="chats">
-    <h3>Chats</h3>
-    <div scroll-glue style="overflow:scroll;overflow-x:height:100px;">
+    <h3>Chat</h3>
+    <div scroll-glue style="overflow:scroll;height:60%;">
         <div ng-repeat="chat in chats">
             <img class="profile-photo" src="http://doge2048.com/meta/doge-600.png" alt="doge">
             <div class="content">
@@ -21,47 +21,5 @@
         <br>
         <button class="btn btn-warning addChatBtn" ng-click="clearChats()">Clear</button>
         <input type="text" ng-model="formData.user.username"  class="chat-text"/>
-
-        <style>
-            body {
-            }
-            .chat-text {
-                margin-left: 5%;
-                text-align: center;
-                line-height: 1.5em;
-                width: 60%;
-                border: none;
-                float: left;
-                height: 50px;
-            }
-            .addChatBtn {
-                height: 50px;
-                width: 25%;
-                float: right;
-                margin-right: 5%;
-            }
-            .chats {
-                height: 85%;
-                width: 25%;
-                float: right;
-            }
-            .profile-photo {
-                float: left;
-                width: 50px;
-                height: 50px;
-                border-radius: 25px;
-            }
-            .content {
-                padding-left: 75px;
-            }
-            .username {
-                color: #3498db;
-            }
-            hr {
-                width: 50%;
-                height: 2px;
-                background-color: #3498db;
-            }
-        </style>
     </form>
 </div>

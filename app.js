@@ -54,7 +54,8 @@ app.service("ninja.shout.defaults", function () {
         return {
             "name":"",
             "description":"",
-            "twitter":""
+            "twitter":"",
+            "votes":0
         };
     };
 });
@@ -88,9 +89,9 @@ function ($scope,defaults,chats) {
 app.controller("ninja.shout.index.events",["$scope","$location","ninja.shout.defaults","ninja.shout.api.events",
 function ($scope,$location,defaults,events) {
     $scope.events=events;
+    $scope.searchText="";
     
     $scope.submitForm = function () {
-        votes = 0;
         $scope.events.$add($scope.formData);
         $scope.resetForm();
     };
@@ -104,9 +105,12 @@ function ($scope,$location,defaults,events) {
         $location.path('events/'+event.$id)
     }
     $scope.addVote = function (event) {
-        votes++;
-        alert(votes);
-        events.$save($scope.event);
+        event.votes++;
+        $scope.events.$save(event);
+    }
+    $scope.subtractVote = function (event) {
+        if (event.votes>0) event.votes--;
+        $scope.events.$save(event);
     }
     $scope.resetForm();
 }]);
