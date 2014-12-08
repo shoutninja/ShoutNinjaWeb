@@ -2,7 +2,7 @@ body {
     background-color: #ecf0f1;
 }
 .top {
-    background-color: #3498db;
+    background-color: #9b59b6;
     top: 0;
     right: 0;
     left: 0;
@@ -33,3 +33,13 @@ td {
 :focus {
     outline: none;
 }
+.mainevents {
+    float: left;
+    width: 75%;
+}
+/*#new {*/
+/*    display: none;*/
+/*}*/
+/*#new:target {*/
+/*    display: block;*/
+/*}*/

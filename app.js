@@ -4,8 +4,8 @@ app.constant("ninja.shout.constants.urls.firebase", "https://eakjb-shout-ninja2.
 
 app.service("ninja.shout.urls", ["ninja.shout.constants.urls.firebase", function (fbURL) {
     this.events=fbURL+"/events";
-    this.chats=fbURL+"/chats"
-    this.settings=fbURL+"/settings"
+    this.chats=fbURL+"/chats";
+    this.settings=fbURL+"/settings";
 }]);
  
 app.config(function($routeProvider) {
@@ -17,7 +17,8 @@ app.config(function($routeProvider) {
     .when( '/events/:event_id', {
         controller: 'ninja.shout.index.event',
         templateUrl: 'view_event.html'
-    }).when('/', {
+    })
+    .when('/', {
         redirectTo:'/events'
     })
     .otherwise({
@@ -75,6 +76,12 @@ function ($scope,defaults,chats) {
         $scope.formData.text="";
     };
     
+    $scope.clearChats = function () {
+        angular.forEach($scope.chats,function(chat) {
+            $scope.chats.$remove(chat);
+        });
+    }
+    
     $scope.formData=new defaults.Chat();
 }]);
 
@@ -83,6 +90,7 @@ function ($scope,$location,defaults,events) {
     $scope.events=events;
     
     $scope.submitForm = function () {
+        votes = 0;
         $scope.events.$add($scope.formData);
         $scope.resetForm();
     };
@@ -95,9 +103,19 @@ function ($scope,$location,defaults,events) {
     $scope.detailEvent = function (event) {
         $location.path('events/'+event.$id)
     }
+    $scope.addVote = function (event) {
+        votes++;
+        alert(votes);
+        events.$save($scope.event);
+    }
     $scope.resetForm();
 }]);
 
 app.controller("ninja.shout.index.event",["$scope","$routeParams","ninja.shout.api.events",function($scope,$routeParams,events) {
-    $scope.event=events.$getRecord($routeParams.event_id);
+    events.$loaded(function () {
+        $scope.event=events.$getRecord($routeParams.event_id);
+    });
+    $scope.sumbitTwitterForm=function () {
+        events.$save($scope.event);
+    };
 }]);
