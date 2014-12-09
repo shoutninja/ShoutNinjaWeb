@@ -79,3 +79,20 @@ hr {
 ::-webkit-scrollbar { 
     display: none; 
 }
+.footer {
+    background-color: #3498db;
+    text-align: center;
+    height: 100px;
+    line-height: 100px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+}
+.footer a {
+    color: #ecf0f1;
+    font-size: 15px;
+}
+.footer a:hover {
+    text-decoration: none;
+}

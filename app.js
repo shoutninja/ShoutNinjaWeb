@@ -6,6 +6,7 @@ app.service("ninja.shout.urls", ["ninja.shout.constants.urls.firebase", function
     this.events=fbURL+"/events";
     this.chats=fbURL+"/chats";
     this.settings=fbURL+"/settings";
+    this.settingsUsernameImageMap=this.settings+"/chats/usernameImageMap";
 }]);
  
 app.config(function($routeProvider) {
@@ -30,6 +31,10 @@ app.factory("ninja.shout.api.settings", ["$firebase","ninja.shout.urls",function
     return $firebase(new Firebase(urls.settings)).$asObject();
 }]);
 
+app.factory("ninja.shout.api.settings.usernameImageMap", ["$firebase","ninja.shout.urls",function($firebase,urls) {
+    return $firebase(new Firebase(urls.settingsUsernameImageMap)).$asArray();
+}]);
+
 app.factory("ninja.shout.api.events", ["$firebase","ninja.shout.urls",function($firebase,urls) {
     return $firebase(new Firebase(urls.events)).$asArray();
 }]);
@@ -46,7 +51,8 @@ app.service("ninja.shout.defaults", function () {
             "text": "",
             "user": {
                 //id
-                "username": "Guest"
+                "username": "Guest",
+                "image":"/img/anonymous.jpg"
             }
         };
     };
@@ -60,21 +66,27 @@ app.service("ninja.shout.defaults", function () {
     };
 });
 
-app.controller("ninja.shout.index.chats",["$scope","ninja.shout.defaults","ninja.shout.api.chats",
-function ($scope,defaults,chats) {
+app.controller("ninja.shout.index.chats",["$scope","$rootScope","ninja.shout.defaults","ninja.shout.api.settings.usernameImageMap","ninja.shout.api.chats",
+function ($scope,$rootScope,defaults,usernameImageMap,chats) {
     $scope.chats=chats;
+    
+    $rootScope.$watch(function() {
+        return $scope.formData.user.username;
+    }, function () {
+        var usernameImageMapping = usernameImageMap.$getRecord($scope.formData.user.username.toLowerCase());
+        if (usernameImageMapping) {
+            $scope.formData.user.image=usernameImageMapping.$value;
+        } else {
+            $scope.formData.user.image=defaults.Chat().user.image;
+        }
+    });
     
     $scope.submitForm = function () {
         $scope.chats.$add($scope.formData);
-    
-        //while (chats.length>10) {
-          //  chats.$remove(0);
-        //}
-    
         $scope.resetForm();
     };
     $scope.resetForm = function () {
-        $scope.formData.text="";
+        $scope.formData.text=defaults.Chat().text;
     };
     
     $scope.clearChats = function () {

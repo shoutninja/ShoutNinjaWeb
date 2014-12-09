@@ -2,7 +2,7 @@
     <h3>Chat</h3>
     <div scroll-glue style="overflow:scroll;height:60%;">
         <div ng-repeat="chat in chats">
-            <img class="profile-photo" src="http://doge2048.com/meta/doge-600.png" alt="doge">
+            <img class="profile-photo" ng-src="{{chat.user.image}}" alt="Profile">
             <div class="content">
                 <span ng-bind="chat.user.username" class="username"></span>
                 <br>
@@ -19,7 +19,8 @@
         <br>
         <br>
         <br>
+        <img class="profile-photo" ng-src="{{formData.user.image}}" alt="Profile">
         <button class="btn btn-warning addChatBtn" ng-click="clearChats()">Clear</button>
-        <input type="text" ng-model="formData.user.username"  class="chat-text"/>
+        <input type="text" style="width:45%" ng-model="formData.user.username"  class="chat-text"/>
     </form>
 </div>
