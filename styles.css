@@ -2,6 +2,9 @@
 body {
     background-color: #ecf0f1;
 }
+.fa-bars {
+    display: none;
+}
 .top {
     background-color:#3498db;
     top: 0;
@@ -95,4 +98,17 @@ hr {
 }
 .footer a:hover {
     text-decoration: none;
+}
+@media all and (max-width: 1024px){
+  body {
+  }
+  .chats {
+      display: none;
+  }
+  .fa-bars {
+      font-size: 25px;
+      float: right;
+      display: block;
+  }
+  .fa-bars:
 }
