@@ -1,5 +1,9 @@
 /* ---------Body styling--------- */
+html {
+    height:100%;
+}
 body {
+    height:100%;
     background-color: #ecf0f1;
 }
 .mobilefirst {
@@ -187,6 +191,10 @@ a .fa {
   }
   .chatsSidebar {
       display: none;
+  }
+  .chatScroller {
+      overflow:scroll;
+      height:35%;
   }
 }
 /* The above layout looked pretty good on mobile.
