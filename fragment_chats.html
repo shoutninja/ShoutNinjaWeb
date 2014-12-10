@@ -1,0 +1,27 @@
+<div ng-controller="ninja.shout.chats" ng-class="sidebar?'chatsSidebar':'chats'" id="chats">
+    <h3>Chat</h3>
+    <span><i>Don't Ninja and Drive.</i></span>
+    <div scroll-glue class="chatScroller">
+        <div ng-repeat="chat in chats">
+            <img class="profile-photo" ng-src="{{chat.user.image}}" alt="Profile">
+            <div class="content">
+                <span ng-bind="chat.user.username" class="username"></span>
+                <br>
+                <span ng-bind="chat.text"></span>
+                <br>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <form class="addChats">
+        <div class="chat-row">
+            <input type="text" ng-model="formData.text" placeholder="your text here" class="chat-text"/>
+        </div>
+        <button class="btn btn-success addChatBtn" ng-click="submitForm()"><i class="fa fa-comment"></i></button>
+        <div class="chat-row">
+            <img class="profile-photo" ng-src="{{formData.user.image}}" alt="Profile">
+            <input type="text" ng-model="formData.user.username"  class="chat-username"/>
+        </div>
+        <button class="btn btn-warning addChatBtn" ng-click="clearChats()"><i class="fa fa-times"></i></button>
+    </form>
+</div>

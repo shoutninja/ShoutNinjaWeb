@@ -2,8 +2,15 @@
 body {
     background-color: #ecf0f1;
 }
-.fa-bars {
+.mobilefirst {
     display: none;
+}
+a {
+    color: #ecf0f1;
+}
+a:hover {
+    text-decoration: none;
+    color: #ecf0f1;
 }
 .top {
     background-color:#3498db;
@@ -40,27 +47,64 @@ td {
 .mainevents {
     float: left;
     width: 75%;
+    text-align: center;
+}
+.event-rows {
+    line-height: 50px;
+}
+.voteCounter {
+    display: block;
+}
+.voteCounterM {
+    display: none;
+}
+.mobileChat {
+    color: #ecf0f1;
+    float:right;
+    margin-right: 25px;
+    display: block;
+}
+.mobileChat:visited{
+    color: #ecf0f1;
+    float:right;
+    margin-right: 25px;
+    display: block;
 }
 /* ---------Chat Styling--------- */
+.chats {
+    display: block;
+}
 .chat-text {
-    margin-left: 5%;
     text-align: center;
     line-height: 1.5em;
-    width: 60%;
+    width: 100%;
     border: none;
     float: left;
     height: 50px;
 }
+.chat-username {
+    text-align: center;
+    line-height: 1.5em;
+    width: 100%;
+    width: -webkit-calc(100% - 55px);
+    width: -moz-calc(100% - 55px);
+    width: calc(100% - 55px);
+    border: none;
+    float: right;
+    height: 50px;
+}
+.chat-row {
+    width:80%;
+    float: left;
+    margin-left:5%;
+    margin-bottom:20px;
+}
 .addChatBtn {
     height: 50px;
-    width: 25%;
+    width: 10%;
     float: right;
     margin-right: 5%;
-}
-.chats {
-    height: 85%;
-    width: 25%;
-    float: right;
+    padding: 0;
 }
 .profile-photo {
     float: left;
@@ -99,16 +143,82 @@ hr {
 .footer a:hover {
     text-decoration: none;
 }
-@media all and (max-width: 1024px){
-  body {
-  }
-  .chats {
-      display: none;
-  }
+.fa-vote {
+    font-size: 25px;
+}
+.mainchatshome {
+    display: block;
+}
+.chats {
+    width: 90%;
+    float: none;
+    margin: 0 auto;
+    display: block;
+}
+.chatsSidebar {
+    height: 100%;
+    width: 25%;
+    float: right;
+}
+.chatScroller {
+    overflow:scroll;
+    height:50%;
+}
+a .fa {
+    font-size:25pt;
+}
+/* Largest size where this layout looks good */
+@media all and (max-width: 700px){
   .fa-bars {
       font-size: 25px;
       float: right;
       display: block;
   }
-  .fa-bars:
+  .mainevents {
+      text-align: center;
+      margin: 0 auto;
+      width: 100%;
+  }
+  .voteCounter {
+      display: none;
+  }
+  .voteCounterM {
+      display: block;
+  }
+  .chatsSidebar {
+      display: none;
+  }
 }
+/* The above layout looked pretty good on mobile.
+@media all and (max-width: 640px) {
+    .all {
+        display: none;
+    }
+    .mobilefirst {
+        display: block;
+    }
+    .navbar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100px;
+        line-height: 100px;
+        background-color: #3498db;
+        width: 100%;
+        color: #ecf0f1;
+    }
+    .fa {
+        font-size: 25px;
+        float: right;
+        display: block;
+        padding: 10px;
+    }
+    .chatsSidebar {
+      width: 90%;
+      float: none;
+      margin: 0 auto;
+      display: block;
+  }
+}
+*/

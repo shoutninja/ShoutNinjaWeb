@@ -8,7 +8,7 @@ app.service("ninja.shout.urls", ["ninja.shout.constants.urls.firebase", function
     this.settings=fbURL+"/settings";
     this.settingsUsernameImageMap=this.settings+"/chats/usernameImageMap";
 }]);
- 
+
 app.config(function($routeProvider) {
     $routeProvider
     .when( '/events', {
@@ -19,8 +19,12 @@ app.config(function($routeProvider) {
         controller: 'ninja.shout.index.event',
         templateUrl: 'view_event.html'
     })
+    .when( '/chats', {
+        controller: 'ninja.shout.index.chats',
+        templateUrl: 'view_chats.html'
+    })
     .when('/', {
-        redirectTo:'/events'
+        redirectTo:'/chats'
     })
     .otherwise({
       redirectTo:'/'
@@ -66,7 +70,7 @@ app.service("ninja.shout.defaults", function () {
     };
 });
 
-app.controller("ninja.shout.index.chats",["$scope","$rootScope","ninja.shout.defaults","ninja.shout.api.settings.usernameImageMap","ninja.shout.api.chats",
+app.controller("ninja.shout.chats",["$scope","$rootScope","ninja.shout.defaults","ninja.shout.api.settings.usernameImageMap","ninja.shout.api.chats",
 function ($scope,$rootScope,defaults,usernameImageMap,chats) {
     $scope.chats=chats;
     
@@ -97,6 +101,14 @@ function ($scope,$rootScope,defaults,usernameImageMap,chats) {
     
     $scope.formData=new defaults.Chat();
 }]);
+
+app.controller("ninja.shout.index",["$scope","$location",function($scope,$location) {
+    $scope.$location=$location;
+}]);
+
+app.controller("ninja.shout.index.chats",function() {
+    //Exists mostly because it should.
+});
 
 app.controller("ninja.shout.index.events",["$scope","$location","ninja.shout.defaults","ninja.shout.api.events",
 function ($scope,$location,defaults,events) {
@@ -137,3 +149,12 @@ function($scope,$location,$routeParams,events) {
         events.$save($scope.event);
     };
 }]);
+
+app.directive("shoutNinjaChat", function() {
+  return {
+    scope: {
+        sidebar:"=sidebar"
+    },
+    templateUrl: 'fragment_chats.html'
+  };
+});
