@@ -1,3 +1,4 @@
+<div class="mainevents">
 <span ng-bind="event_id"></span>
 <h2 ng-bind="event.name"></h2>
 <p ng-bind="event.description"></p>
@@ -8,7 +9,7 @@
 <span ng-hide="event.twitter&&event.twitter!=''">Want to get your message out there?<br/>Integrate twitter.</span>
 <form>
     <input type="text" placeholder="#hashtag" ng-model="event.twitter" ng-change="sumbitTwitterForm()"/>
-    
 </form>
 <button class="btn" ng-click="$location.path('/events')">Back</button>
+</div>
 <div shout-ninja-chat sidebar="true"></div>

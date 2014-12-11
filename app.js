@@ -1,4 +1,4 @@
-var app = angular.module("ninja.shout",["ngRoute","luegg.directives","firebase"]);
+var app = angular.module("ninja.shout",["ngRoute","ngCookies","luegg.directives","firebase"]);
 
 app.constant("ninja.shout.constants.urls.firebase", "https://eakjb-shout-ninja2.firebaseio.com");
 
@@ -9,11 +9,21 @@ app.service("ninja.shout.urls", ["ninja.shout.constants.urls.firebase", function
     this.settingsUsernameImageMap=this.settings+"/chats/usernameImageMap";
 }]);
 
+app.constant("ninja.shout.constants.local.cookies.prefix", "ninja.shout.local.cookie");
+
+app.service("ninja.shout.cookies", ["ninja.shout.constants.local.cookies.prefix", function(prefix) {
+    this.advertisingEnabled=prefix+".advertisingEnabled";
+}]);
+
 app.config(function($routeProvider) {
     $routeProvider
     .when( '/events', {
         controller: 'ninja.shout.index.events',
         templateUrl: 'view_events.html'
+    })
+    .when( '/settings', {
+        controller: 'ninja.shout.index.settings',
+        templateUrl: 'view_settings.html'
     })
     .when( '/events/:event_id', {
         controller: 'ninja.shout.index.event',
@@ -24,7 +34,7 @@ app.config(function($routeProvider) {
         templateUrl: 'view_chats.html'
     })
     .when('/', {
-        redirectTo:'/chats'
+        redirectTo:'/events'
     })
     .otherwise({
       redirectTo:'/'
@@ -70,6 +80,24 @@ app.service("ninja.shout.defaults", function () {
     };
 });
 
+app.service("ninja.shout.local.settings", ["$cookieStore", "ninja.shout.cookies", function ($cookieStore, cookies) {
+    this.setAdvertisingEnabled = function (enabled) {
+        if (enabled) {
+            $cookieStore.put(cookies.advertisingEnabled,enabled);
+        } else {
+            $cookieStore.remove(cookies.advertisingEnabled);
+        }
+    };
+    this.isAdvertisingEnabled = function () {
+        var value=$cookieStore.get(cookies.advertisingEnabled);
+        if (value) {
+            return value;
+        } else {
+            return false;
+        }
+    }
+}]);
+
 app.controller("ninja.shout.chats",["$scope","$rootScope","ninja.shout.defaults","ninja.shout.api.settings.usernameImageMap","ninja.shout.api.chats",
 function ($scope,$rootScope,defaults,usernameImageMap,chats) {
     $scope.chats=chats;
@@ -102,13 +130,31 @@ function ($scope,$rootScope,defaults,usernameImageMap,chats) {
     $scope.formData=new defaults.Chat();
 }]);
 
-app.controller("ninja.shout.index",["$scope","$location",function($scope,$location) {
+app.controller("ninja.shout.index",["$scope","$rootScope","$location","ninja.shout.local.settings",
+function($scope,$rootScope,$location,localSettings) {
     $scope.$location=$location;
+    $rootScope.$watch(localSettings.isAdvertisingEnabled,function () {
+        $scope.advertisingEnabled=localSettings.isAdvertisingEnabled();
+    });
 }]);
 
 app.controller("ninja.shout.index.chats",function() {
     //Exists mostly because it should.
 });
+
+app.controller("ninja.shout.index.settings",["$scope","$rootScope","ninja.shout.local.settings",
+function($scope,$rootScope,localSettings) {
+    $rootScope.$watch(localSettings.isAdvertisingEnabled,function () {
+        $scope.advertisingEnabled=localSettings.isAdvertisingEnabled();
+    });
+    
+    $scope.advertisingOptIn = function () {
+        localSettings.setAdvertisingEnabled(true);
+    };
+    $scope.advertisingOptOut = function () {
+        localSettings.setAdvertisingEnabled(false);
+    };
+}]);
 
 app.controller("ninja.shout.index.events",["$scope","$location","ninja.shout.defaults","ninja.shout.api.events",
 function ($scope,$location,defaults,events) {

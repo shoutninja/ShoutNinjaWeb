@@ -6,9 +6,6 @@ body {
     height:100%;
     background-color: #ecf0f1;
 }
-.mobilefirst {
-    display: none;
-}
 a {
     color: #ecf0f1;
 }
@@ -54,13 +51,62 @@ td {
     text-align: center;
 }
 .event-rows {
+    background-color: white;
+    width: 30%;
+    margin: 2.5%;
+    display: inline-block;
+    border-radius: 10px;
+}
+.event-rows p {
+    font-size: 15px;
+}
+.event-rowsa {
+    background-color: white;
+    width: 30%;
+    margin: 2.5%;
+    border-radius: 10px;
+    margin: 0 auto;
+}
+.event-form {
+    margin: 0;
+}
+.event-form input{
+    margin: 0 auto;
+    background-color: white;
+}
+.submitFormBtn {
+    width: 100%;
+    border: none;
+    background-color: #3498db;
     line-height: 50px;
+    color: white;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.box {
+    width: calc(100% /3);
+    color: white;
+    display: inline-block;
+    margin: 0;
+    float: left;
+    padding: 5px;
+}
+.box:hover {
+    cursor:pointer;
+}
+.box1 {
+    background-color: #3498db;
+    border-bottom-left-radius: 10px;
+}
+.box2 {
+    background-color: #f39c12;
+}
+.box3 {
+    background-color: #e74c3c;
+    border-bottom-right-radius: 10px;
 }
 .voteCounter {
     display: block;
-}
-.voteCounterM {
-    display: none;
 }
 .mobileChat {
     color: #ecf0f1;
@@ -73,6 +119,18 @@ td {
     float:right;
     margin-right: 25px;
     display: block;
+}
+.ad-leftskyscraper {
+    float:left;
+    margin:0;
+    padding:0;
+}
+.main-view {
+    float:left;
+    width:100%;
+}
+.event-text {
+    width:90%;
 }
 /* ---------Chat Styling--------- */
 .chats {
@@ -147,9 +205,6 @@ hr {
 .footer a:hover {
     text-decoration: none;
 }
-.fa-vote {
-    font-size: 25px;
-}
 .mainchatshome {
     display: block;
 }
@@ -168,11 +223,18 @@ hr {
     overflow:scroll;
     height:50%;
 }
-a .fa {
-    font-size:25pt;
+.event-name {
+    height:32px;
+    display:block;
+    overflow:scroll;
+}
+.event-description {
+    height:64px;
+    display:block;
+    overflow:scroll;
 }
 /* Largest size where this layout looks good */
-@media all and (max-width: 700px){
+@media all and (max-width: 768px){
   .fa-bars {
       font-size: 25px;
       float: right;
@@ -183,12 +245,6 @@ a .fa {
       margin: 0 auto;
       width: 100%;
   }
-  .voteCounter {
-      display: none;
-  }
-  .voteCounterM {
-      display: block;
-  }
   .chatsSidebar {
       display: none;
   }
@@ -196,37 +252,17 @@ a .fa {
       overflow:scroll;
       height:35%;
   }
-}
-/* The above layout looked pretty good on mobile.
-@media all and (max-width: 640px) {
-    .all {
-        display: none;
-    }
-    .mobilefirst {
-        display: block;
-    }
-    .navbar {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 100px;
-        line-height: 100px;
-        background-color: #3498db;
-        width: 100%;
-        color: #ecf0f1;
-    }
-    .fa {
-        font-size: 25px;
-        float: right;
-        display: block;
-        padding: 10px;
-    }
-    .chatsSidebar {
+  .event-rows {
       width: 90%;
-      float: none;
       margin: 0 auto;
-      display: block;
+      margin-bottom: 25px;
+  }
+  .event-rowsa {
+      width: 90%;
+      margin: 0 auto;
+      margin-bottom: 25px;
+  }
+  .ad-leftskyscraper {
+      display: none;
   }
 }
-*/

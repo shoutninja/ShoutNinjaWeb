@@ -1,0 +1,68 @@
+<h3>Settings</h3>
+<div class="panel primary">
+    <div class="panel-heading"><b>Advertising Opt-In</b></div>
+    <div class="panel-body">
+        <span ng-hide="advertisingEnabled">Shout.Ninja will soon be trying an experimental advertising 
+        in order to fund further expansion, development, and profit.  We highly
+        recommend that you enable advertising in order to support Shout.Ninja. We
+        do not want to force advertisng on to anyone, so click below to opt-in. You
+        can always opt-out later.</span>
+        <span ng-show="advertisingEnabled">Thank you so much for supporting Shout.Ninja.
+        You are what make this website possible.</span>
+        <br/><br/>
+        <button ng-hide="advertisingEnabled" ng-click="advertisingOptIn()" class="btn btn-primary">Opt-In To Advertising</button>
+        <button ng-show="advertisingEnabled" ng-click="advertisingOptOut()" class="btn">Opt-Out Of Advertising</button>
+    </div>
+</div>
+<div class="panel primary">
+    <div class="panel-heading"><b>Donate to Shout.Ninja</b></div>
+    <div class="panel-body">
+        <span>If Shout.Ninja continues growing at the rate it already is, we
+        wont be able to afford hosting for the frontend and backend.  If you don't
+        want to see ads or a paid subscription service, you can donate to help us
+        keep our servers running. Additionally, you can aid your conscience from
+        disabling ads.</span>
+        <br>
+        <br>
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+            <input type="hidden" name="cmd" value="_s-xclick">
+            <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+            <input type="image" style="border:0" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+        </form>
+    </div>
+</div>
+<div class="panel primary">
+    <div class="panel-heading">
+        <b>Donate to Charity</b>
+    </div>
+    <div class="panel-body">
+    <span>Help us change the world one click at a time.</span>
+    <br/><br/>
+    <ul class="media-list">
+        <li class="media">
+            <a class="media-left" href="//donate.charitywater.org/">
+                <img style="width:64px; height:64px" src="//www.charitywater.org/media/downloads/logos/charitywater_vertical_black.jpg" alt="Charity Water"/>
+            </a>
+            <div class="media-body">
+                <p>Charity: water is a non-profit organization bringing clean, safe drinking water to people in developing
+countries. We use 100% of public donations to directly fund sustainable water solutions in areas of
+greatest need.
+                <br/><br/>
+Right now, 800 million people on the planet don’t have access to clean and safe drinking water.
+That’s one in nine of us.
+                <br/><br/>
+Unsafe water and lack of basic sanitation cause 80% of diseases and kill more people every year
+than all forms of violence, including war. Children are especially vulnerable, as their bodies aren’t
+strong enough to fight diarrhea, dysentery and other illnesses.
+                <br/><br/>
+Just $20 can give one person access to clean water
+                </p>
+                <button class="btn btn-info"><a href="//www.charitywater.org/whywater/">Learn More</a></button>
+                <button class="btn btn-primary"><a href="//donate.charitywater.org/">Donate</a></button>
+            </div>
+        </li>
+    </ul>
+</div>
+</div>
+</div>

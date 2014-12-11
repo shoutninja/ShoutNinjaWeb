@@ -1,0 +1,9 @@
+{
+  "firebase": "eakjb-shout-ninja2",
+  "public": ".",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}

@@ -5,6 +5,7 @@
         
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-cookies.js"></script>
         
         <script src="https://cdn.rawgit.com/Luegg/angularjs-scroll-glue/v2.0.2/src/scrollglue.js"></script>
         
@@ -33,25 +34,21 @@
         <div class="all">
             <div class="top outer">
                 <div class="inner">
-                    <h1><a href ng-click="$location.path('/')">Shout.Ninja</a>
+                    <h1>
+                        <a href ng-click="$location.path('/')">Shout.Ninja</a>
+                    <a href ng-show="$location.path()!='/settings'" ng-click="$location.path('/settings')" class="mobileChat">
+                        <i class="fa fa-cog"></i></a>
+                    <a href ng-show="$location.path()!='/events'" ng-click="$location.path('/events')" class="mobileChat">
+                        <i class="fa fa-calendar"></i></a>
                     <a href ng-show="$location.path()!='/chats'" ng-click="$location.path('/chats')" class="mobileChat">
                         <i class="fa fa-comment"></i></a>
-                    <a href ng-show="$location.path()!='/events'" ng-click="$location.path('/events')" class="mobileChat">
-                        <i class="fa fa-calendar"></i></a></h1>
+                        </h1>
                 </div>
             </div>
-            <div ng-view></div>
+            <div class="main-view" ng-view></div>
             <!--<div class="footer">
                 <span><a href="http://hcjk.co/shout/">About</a></span>
             </div>-->
-        </div>
-        <div class="mobilefirst">
-            <div class="navbar outer">
-                <div class="inner">
-                    <i class="fa fa-bars"></i>
-                    <a ng-click="$location.path('/chats')" ><i class="fa fa-comment"></i></a>
-                </div>
-            </div>
         </div>
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
