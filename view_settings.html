@@ -3,7 +3,8 @@
     <div class="panel-heading"><b>Twitter Integration</b></div>
     <div class="panel-body">
         <span ng-hide="authData">You can authenticate using your twitter account in order to verify where your messages are coming from.</span>
-        <span ng-show="authData">You are currently authenticated as <b><span ng-bind="authData.getUsername()"></span></b></span>
+        <span ng-show="authData">You are currently authenticated as <b><span ng-bind="authData.getUsername()"></span></b>. 
+        Use your twitter username as your chat username in order to be verified as yourself.</span>
         <br/><br/>
         <button ng-hide="authData" ng-click="login()" class="btn btn-primary">Integrate Twitter</button>
         <button ng-show="authData" ng-click="logout()" class="btn">Twitter Log Out</button>
