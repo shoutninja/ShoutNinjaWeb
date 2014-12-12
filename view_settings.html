@@ -1,5 +1,15 @@
 <h3>Settings</h3>
 <div class="panel primary">
+    <div class="panel-heading"><b>Twitter Integration</b></div>
+    <div class="panel-body">
+        <span ng-hide="authData">You can authenticate using your twitter account in order to verify where your messages are coming from.</span>
+        <span ng-show="authData">You are currently authenticated as <b><span ng-bind="authData.getUsername()"></span></b></span>
+        <br/><br/>
+        <button ng-hide="authData" ng-click="login()" class="btn btn-primary">Integrate Twitter</button>
+        <button ng-show="authData" ng-click="logout()" class="btn">Twitter Log Out</button>
+    </div>
+</div>
+<div class="panel primary">
     <div class="panel-heading"><b>Advertising Opt-In</b></div>
     <div class="panel-body">
         <span ng-hide="advertisingEnabled">Shout.Ninja will soon be trying an experimental advertising 

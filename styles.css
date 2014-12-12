@@ -132,6 +132,14 @@ td {
 .event-text {
     width:90%;
 }
+.loginBtn {
+    padding: 10px;
+    background-color: #ecf0f1;
+    color: #3498db;
+    border: 0;
+    border-radius: 10px;
+    font-size: 25px;
+}
 /* ---------Chat Styling--------- */
 .chats {
     display: block;

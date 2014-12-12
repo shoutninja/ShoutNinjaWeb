@@ -2,9 +2,11 @@
     <h3>Chat</h3>
     <div scroll-glue class="chatScroller">
         <div ng-repeat="chat in chats">
-            <img class="profile-photo" ng-src="{{chat.user.image}}" alt="Profile">
+            <a ng-href="{{chat.user.href}}"><img class="profile-photo" ng-src="{{chat.user.image}}" alt="Profile"></a>
+            <!--<span ng-show="$scope.authData"><i class="fa fa-check"></i></span>-->
             <div class="content">
-                <span ng-bind="chat.user.username" class="username"></span>
+                <a ng-href="{{chat.user.href}}"><span ng-bind="chat.user.username" class="username"></span></a>
+                <i ng-show="chat.user.uid" class="fa fa-check-square"></i>
                 <br>
                 <span ng-bind="chat.text"></span>
                 <br>
