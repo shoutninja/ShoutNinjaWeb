@@ -5,12 +5,20 @@
  */
 app.service("ninja.shout.cookies", ["ninja.shout.constants.local.cookies.prefix", function(prefix) {
     this.advertisingEnabled = prefix + ".advertisingEnabled";
-    this.filterEventsWithoutOwners = prefix + ".filterEventsWithoufilterEventsWithoutOwners";
+    this.filterEventsWithoutOwners = prefix + ".filterEventsWithoutOwners";
 }]);
 
 app.service("ninja.shout.local.settings", ["$cookieStore", "ninja.shout.cookies", function($cookieStore, cookies) {
+    this.watcher = function () {
+        var values="";
+        for (var key in cookies) {
+            if (cookies.hasOwnProperty(key)) {
+                values+=$cookieStore.get(cookies[key]);
+            }
+        }
+        return values;
+    }
     this.setCookie = function (cookie,val) {
-        //console.log("Setting "+cookie+" to "+val);
         if (val) {
             $cookieStore.put(cookie,val);
         } else {
@@ -53,7 +61,7 @@ app.service("ninja.shout.api.auth", ["$firebaseAuth", "ninja.shout.defaults",
                 };
                 return authData;
             }
-        }
+        };
 
         this.__auth.$onAuth(function(authData) {
             authData=addMethods(authData);

@@ -7,8 +7,8 @@
         <br/><br/>
         <span>In order for an event to hve an owner, you user must me authenticated (I.E. using twitter integration)</span>
         <br/><br/>
-        <button ng-hide="authData" ng-click="login()" class="btn btn-primary">Integrate Twitter</button>
-        <button ng-show="authData" ng-click="logout()" class="btn">Twitter Log Out</button>
+        <button ng-hide="filterEventsWithoutOwners" ng-click="localSettings.setCookieAlias('filterEventsWithoutOwners',true)" class="btn btn-primary">Filter Events Without Owners</button>
+        <button ng-show="filterEventsWithoutOwners" ng-click="localSettings.setCookieAlias('filterEventsWithoutOwners',false)" class="btn">Restore Events Without Owners</button>
     </div>
 </div>
 <div class="panel primary">
@@ -33,8 +33,8 @@
         <span ng-show="advertisingEnabled">Thank you so much for supporting Shout.Ninja.
         You are what makes this website possible.</span>
         <br/><br/>
-        <button ng-hide="advertisingEnabled" ng-click="advertisingOptIn()" class="btn btn-primary">Opt-In To Advertising</button>
-        <button ng-show="advertisingEnabled" ng-click="advertisingOptOut()" class="btn">Opt-Out Of Advertising</button>
+        <button ng-hide="advertisingEnabled" ng-click="localSettings.setCookieAlias('advertisingEnabled',true)" class="btn btn-primary">Opt-In To Advertising</button>
+        <button ng-show="advertisingEnabled" ng-click="localSettings.setCookieAlias('advertisingEnabled',false)" class="btn">Opt-Out Of Advertising</button>
     </div>
 </div>
 <div class="panel primary">

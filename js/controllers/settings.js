@@ -5,17 +5,10 @@
  */
 app.controller("ninja.shout.index.settings", ["$scope", "$rootScope", "ninja.shout.local.settings",
     function($scope, $rootScope, localSettings) {
-        $rootScope.$watch(function() {
-            return localSettings.getCookieAlias("advertisingEnabled");
-        }, function() {
-            $scope.advertisingEnabled = localSettings.getCookieAlias("advertisingEnabled");
+        $rootScope.$watch(localSettings.watcher, function(val) {
+            $scope.localSettings=localSettings;
+            $scope.advertisingEnabled=localSettings.getCookieAlias("advertisingEnabled");
+            $scope.filterEventsWithoutOwners=localSettings.getCookieAlias("filterEventsWithoutOwners");
         });
-
-        $scope.advertisingOptIn = function() {
-            localSettings.setCookieAlias("advertisingEnabled",true);
-        };
-        $scope.advertisingOptOut = function() {
-            localSettings.setCookieAlias("advertisingEnabled",false);
-        };
     }
 ]);

@@ -1,31 +1,57 @@
 <div class="mainevents">
-<span ng-bind="event_id"></span>
-<h2 ng-bind="event.name"></h2>
-<p ng-bind="event.description"></p>
-<h2>Twitter Integration</h2>
-<div ng-show="event.twitter&&event.twitter!=''">
-    <span ng-bind="event.twitter"></span>
-</div>
-<span ng-hide="event.twitter&&event.twitter!=''">Want to get your message out there?<br/>Integrate twitter.</span>
-<form>
-    <input type="text" placeholder="#hashtag" ng-model="event.twitter" ng-change="sumbitTwitterForm()"/>
-</form>
-<h3>Comments</h3>
-<div ng-repeat="comment in comments">
-    <span ng-bind="comment.user"></span>
-    <br>
-    <br>
-    <p ng-bind="comment.text"></p>
-    <br>
-    <br>
-</div>
-<form>
-    <input type="text" ng-model="comment.text">
-    <button ng-click="addComment()">Add Comment</button>
-    <br>
-    <small>By adding comments, you must be signed into twitter.</small>
-</form>
-<br>
-<button class="btn" ng-click="$location.path('/events')">Back</button>
+    <span ng-bind="event_id"></span>
+    <h2 ng-bind="event.name"></h2>
+    <p ng-bind="event.description"></p>
+    <h4>User</h4>
+    <div ng-show="event.user" style="display:inline-block">
+        <a ng-href="{{event.user.href}}"><img class="profile-photo" ng-src="{{event.user.image}}" alt="Profile">
+        </a>
+        <!--<span ng-show="$scope.authData"><i class="fa fa-check"></i></span>-->
+        <div class="content">
+            <a ng-href="{{event.user.href}}"><span ng-bind="event.user.username" class="username"></span></a>
+            <a href ng-click="$location.path('/help/verifiedUsers')">
+                <i ng-show="event.user.uid" class="fa fa-check-square"></i>
+            </a>
+            <br>
+        </div>
+    </div>
+    <h4>Twitter Integration</h4>
+    <div ng-show="event.twitter&&event.twitter!=''">
+        <span ng-bind="event.twitter"></span>
+    </div>
+    <span ng-hide="event.twitter&&event.twitter!=''">Want to get your message out there?<br/>Integrate twitter.</span>
+    <form>
+        <input type="text" placeholder="#hashtag" ng-model="event.twitter" ng-change="sumbitTwitterForm()" />
+    </form>
+    <h3>Comments</h3>
+    <table>
+        <tr ng-repeat="comment in comments">
+            <td>
+                <a ng-href="{{comment.user.href}}">
+                    <img class="profile-photo" ng-src="{{comment.user.image}}" alt="Profile">
+                </a>
+            </td>
+            <td>
+                <a style="text-decoration:none" ng-href="{{comment.user.href}}">
+                    <span ng-bind="comment.user.username" class="username"></span>
+                </a>
+                <a href ng-click="$location.path('/help/verifiedUsers')">
+                    <i ng-show="comment.user.uid" class="fa fa-check-square"></i>
+                </a>
+            </td>
+            <td>
+                <span ng-bind="comment.text"></span>
+            </td>
+        </tr>
+    </table>
+    <form>
+        <input type="text" ng-model="commentFormData.text">
+        <button ng-click="addComment(event)">Add Comment</button>
+        <br>
+        <small>By adding comments, you must be signed into twitter.</small>
+    </form>
+    <br/>
+    <br/>
+    <button class="btn" ng-click="$location.path('/events')">Back</button>
 </div>
 <div shout-ninja-chat sidebar="true"></div>
