@@ -29,14 +29,14 @@
         <button ng-click="submitForm()" class="submitFormBtn">Submit</button>
       </form>
     </div>
-    <div ng-repeat="event in events | filter:searchText | orderBy:'votes':true" class="event-rows">
+    <div ng-repeat="event in events | filter:searchText | orderBy:'voteCount':true" ng-controller="ninja.shout.index.events.event" class="event-rows">
       <h3><span class="event-name" ng-bind="event.name"></span></h3>
       <p><span class="event-description" ng-bind="event.description"></span></p>
       <div>
         <div class="box box1" ng-click="addVote(event)">
           <i class="fa fa-heart fa-vote"></i>
           <br>
-          <span class="vote" style="text-align:center" ng-bind="event.votes"></span>
+          <span class=" " style="text-align:center" ng-bind="voteCount"></span>
         </div>
         <div class="box box2" ng-click="detailEvent(event)">
           <i class="fa fa-info"></i>

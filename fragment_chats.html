@@ -6,7 +6,9 @@
             <!--<span ng-show="$scope.authData"><i class="fa fa-check"></i></span>-->
             <div class="content">
                 <a ng-href="{{chat.user.href}}"><span ng-bind="chat.user.username" class="username"></span></a>
-                <i ng-show="chat.user.uid" class="fa fa-check-square"></i>
+                <a href ng-click="$location.path('/help/verifiedUsers')">
+                    <i ng-show="chat.user.uid" class="fa fa-check-square"></i>
+                </a>
                 <br>
                 <span ng-bind="chat.text"></span>
                 <br>

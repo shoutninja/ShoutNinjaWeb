@@ -8,6 +8,8 @@ app.service("ninja.shout.urls", ["ninja.shout.constants.urls.firebase", function
     this.chats = fbURL + "/chats";
     this.users = fbURL + "/users";
     this.settings = fbURL + "/settings";
+    this.votes = "/votes";
+    this.location = "/location";
     this.settingsUsernameImageMap = this.settings + "/chats/usernameImageMap";
 }]);
 
@@ -35,6 +37,10 @@ app.config(function($routeProvider) {
             controller: 'ninja.shout.index.chats',
             templateUrl: 'view_chats.html'
         })
+        .when('/help/:help_path', {
+            controller: 'ninja.shout.index.help',
+            templateUrl: 'view_help.html'
+        })
         .when('/', {
             redirectTo: '/events'
         })
@@ -61,6 +67,22 @@ app.factory("ninja.shout.api.events", ["$firebase", "ninja.shout.urls", function
     return $firebase(new Firebase(urls.events)).$asArray();
 }]);
 
+app.service("ninja.shout.api.events.votes", ["$firebase","ninja.shout.urls", function($firebase, urls) {
+    this.getVotes = function (event) {
+        return $firebase(new Firebase(urls.events+"/"+event.$id+urls.votes));
+    };
+}]);
+app.service("ninja.shout.api.events.comments", ["$firebase","ninja.shout.urls", function($firebase, urls) {
+    this.getComments = function (event) {
+        return $firebase(new Firebase(urls.events+"/"+event.$id+urls.comments));
+    };
+}]);
+app.service("ninja.shout.api.events.location",  ["$firebase", "ninja.shout.urls", function($firebase, urls) {
+    this.getLocation = function (event) {
+        
+    }
+}]);
+
 app.factory("ninja.shout.api.chats", ["$firebase", "ninja.shout.api.settings", "ninja.shout.urls",
     function($firebase, settings, urls) {
         return $firebase(new Firebase(urls.chats)).$asArray();
@@ -69,7 +91,7 @@ app.factory("ninja.shout.api.chats", ["$firebase", "ninja.shout.api.settings", "
 
 app.factory("ninja.shout.api.users", ["$firebase", "ninja.shout.api.settings", "ninja.shout.urls",
     function($firebase, settings, urls) {
-        return $firebase(new Firebase(urls.users)).$asArray();
+        return $firebase(new Firebase(urls.users));
     }
 ]);
 
@@ -90,14 +112,23 @@ app.service("ninja.shout.defaults", function() {
             "name": "",
             "description": "",
             "twitter": "",
-            "votes": 0
+            "votes": [],
+            "comments": []
         };
     };
     this.User = function() {
         return {
             //id
-            "uid": ""
+            "provider":"",
+            "username":""
         };
+    };
+    this.Location = function() {
+        return {
+            "name": "",
+            "lattitude": "",
+            "longitude": ""
+        }
     }
 });
 
@@ -125,16 +156,18 @@ app.service("ninja.shout.api.auth", ["$firebaseAuth", "ninja.shout.defaults",
     "ninja.shout.constants.urls.twitter","ninja.shout.api.users", "ninja.shout.api.raw.ref",
     function($firebaseAuth, defaults, twitterURL, users, ref) {
         this.__auth = $firebaseAuth(ref);
+        
+        var fixUsername = function (username,provider) {
+            return "@"+username;
+        };
 
         this.__auth.$onAuth(function(authData) {
             if (authData) {
-                    users.$loaded(function(users) {
-                        var user = new defaults.User();
-                        user.uid = authData.uid;
-                        if (users.filter(function(filterUser) {return user.uid==filterUser.uid}).length < 1) {
-                            users.$add(user);
-                        }
-                });
+                var user = new defaults.User();
+                user.uid=authData.uid;
+                user.provider = authData.provider;
+                user.username = fixUsername(authData[authData.provider].username,authData.provider);
+                users.$set(authData.uid,user);
             }
         });
 
@@ -147,18 +180,19 @@ app.service("ninja.shout.api.auth", ["$firebaseAuth", "ninja.shout.defaults",
             });
         };
 
-        this.getAuth = function() {
-            if (this.__auth.$getAuth()) {
-                this.__auth.$getAuth().getUsername = function() {
-                    return "@" + this.twitter.username;
+        this.getAuth = function(authData) {
+            if (!authData) authData=this.__auth;
+            if (authData.$getAuth()) {
+                authData.$getAuth().getUsername = function() {
+                    return fixUsername(this[this.provider].username,this.provider);
                 };
-                this.__auth.$getAuth().getImage = function() {
+                authData.$getAuth().getImage = function() {
                     return this.twitter.cachedUserProfile.profile_image_url_https;
                 };
-                this.__auth.$getAuth().getURL = function() {
+                authData.$getAuth().getURL = function() {
                     return twitterURL+"/"+this.twitter.username;
                 };
-                return this.__auth.$getAuth();
+                return authData.$getAuth();
             }
         };
 
@@ -177,6 +211,9 @@ app.controller("ninja.shout.chats", ["$scope", "$rootScope", "ninja.shout.api.au
             return $scope.formData.user.username;
         }, function() {
             var usernameImageMapping = usernameImageMap.$getRecord($scope.formData.user.username.toLowerCase());
+            $scope.formData.user.image = "";
+            $scope.formData.user.uid="";
+            $scope.formData.user.href="";
             if (usernameImageMapping) {
                 $scope.formData.user.image = usernameImageMapping.$value;
             }
@@ -230,6 +267,10 @@ app.controller("ninja.shout.index", ["$scope", "$rootScope", "$location", "ninja
     }
 ]);
 
+app.controller("ninja.shout.index.help",["$scope","$routeParams", function($scope,$routeParams) {
+    $scope.helpPath="/help/"+$routeParams.help_path+".html";
+}]);
+
 app.controller("ninja.shout.index.chats", function() {
     //Exists mostly because it should.
 });
@@ -249,14 +290,22 @@ app.controller("ninja.shout.index.settings", ["$scope", "$rootScope", "ninja.sho
     }
 ]);
 
-app.controller("ninja.shout.index.events", ["$scope", "$location", "ninja.shout.defaults", "ninja.shout.api.events", "ninja.shout.api.auth",
-    function($scope, $location, defaults, events, auth) {
+app.controller("ninja.shout.index.events", ["$scope", "$rootScope", "$location",
+"ninja.shout.defaults", "ninja.shout.api.events", "ninja.shout.api.events.votes",
+"ninja.shout.api.auth",
+    function($scope, $rootScope, $location, defaults, events, votes, auth) {
         $scope.events = events;
         $scope.searchText = "";
 
         $scope.submitForm = function() {
-            $scope.events.$add($scope.formData);
-            $scope.resetForm();
+            if (auth.getAuth()) {
+                $scope.events.$add($scope.formData);
+                
+                $scope.resetForm();
+            }
+            else {
+                alert('You need to be signed in first before doing that.')
+            }
         };
         $scope.resetForm = function() {
             $scope.formData = new defaults.Event;
@@ -266,20 +315,48 @@ app.controller("ninja.shout.index.events", ["$scope", "$location", "ninja.shout.
         };
         $scope.detailEvent = function(event) {
             $location.path('events/' + event.$id)
+        };
+        $scope.getVotes = votes.getVotes;
+        $scope.getVotesArray = function(e) {
+            return $scope.getVotes(e).$asArray();
         }
         $scope.addVote = function(event) {
-            if (auth.getAuth()) {
-                event.votes++;
-                $scope.events.$save(event);
+            if(auth.getAuth()) {
+                var votesArray=$scope.getVotes(event);
+                var vote = new defaults.User();
+                vote.uid = auth.getAuth().uid;
+                vote.username = auth.getAuth().getUsername();
+                vote.provider = auth.getAuth().provider;
+                votesArray.$set(vote.uid,vote);
+            }
+            else {
+                alert('You need to be signed in first before doing that.')
             }
         }
         $scope.resetForm();
     }
 ]);
 
+app.controller("ninja.shout.index.events.event", ["$scope","$rootScope",
+"ninja.shout.defaults", "ninja.shout.api.events", "ninja.shout.api.events.votes",
+"ninja.shout.api.auth",
+    function($scope, $rootScope, defaults, events, votes, auth) {
+        $scope.getVotesArray($scope.event).$loaded(function(votes) {
+            $scope.event.voteCount=votes.length;
+            $scope.voteCount=votes.length;
+            votes.$watch(function(e) {
+                $rootScope.$apply(function (){
+                    $scope.voteCount=votes.length;
+                    $scope.event.voteCount=votes.length;
+                });
+            });
+        });
+    }
+]);
+
 app.controller("ninja.shout.index.event", ["$scope", "$location", "$routeParams", "ninja.shout.api.events",
     function($scope, $location, $routeParams, events) {
-        $scope.$location = $location;
+        $scope.$location = $location;   
         events.$loaded(function() {
             $scope.event = events.$getRecord($routeParams.event_id);
         });
@@ -296,4 +373,4 @@ app.directive("shoutNinjaChat", function() {
         },
         templateUrl: 'fragment_chats.html'
     };
-});
+}); 

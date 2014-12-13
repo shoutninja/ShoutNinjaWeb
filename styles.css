@@ -7,7 +7,7 @@ body {
     background-color: #ecf0f1;
 }
 a {
-    color: #ecf0f1;
+    color: #000000;
 }
 a:hover {
     text-decoration: none;
@@ -22,6 +22,15 @@ a:hover {
     text-align: center;
     width: 100%;
     color: #ecf0f1;
+}
+.top a {
+    color: white;
+}
+.top a:hover {
+    text-decoration: none;
+}
+.top a:visited {
+    text-decoration: none;
 }
 .outer {
     display: table;
