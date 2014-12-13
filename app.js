@@ -42,7 +42,7 @@ app.config(function($routeProvider) {
             templateUrl: 'view_help.html'
         })
         .when('/', {
-            redirectTo: '/events'
+            redirectTo: '/chats'
         })
         .otherwise({
             redirectTo: '/'
@@ -67,19 +67,19 @@ app.factory("ninja.shout.api.events", ["$firebase", "ninja.shout.urls", function
     return $firebase(new Firebase(urls.events)).$asArray();
 }]);
 
-app.service("ninja.shout.api.events.votes", ["$firebase","ninja.shout.urls", function($firebase, urls) {
-    this.getVotes = function (event) {
-        return $firebase(new Firebase(urls.events+"/"+event.$id+urls.votes));
+app.service("ninja.shout.api.events.votes", ["$firebase", "ninja.shout.urls", function($firebase, urls) {
+    this.getVotes = function(event) {
+        return $firebase(new Firebase(urls.events + "/" + event.$id + urls.votes));
     };
 }]);
-app.service("ninja.shout.api.events.comments", ["$firebase","ninja.shout.urls", function($firebase, urls) {
-    this.getComments = function (event) {
-        return $firebase(new Firebase(urls.events+"/"+event.$id+urls.comments));
+app.service("ninja.shout.api.events.comments", ["$firebase", "ninja.shout.urls", function($firebase, urls) {
+    this.getComments = function(event) {
+        return $firebase(new Firebase(urls.events + "/" + event.$id + urls.comments));
     };
 }]);
-app.service("ninja.shout.api.events.location",  ["$firebase", "ninja.shout.urls", function($firebase, urls) {
-    this.getLocation = function (event) {
-        
+app.service("ninja.shout.api.events.location", ["$firebase", "ninja.shout.urls", function($firebase, urls) {
+    this.getLocation = function(event) {
+
     }
 }]);
 
@@ -119,8 +119,8 @@ app.service("ninja.shout.defaults", function() {
     this.User = function() {
         return {
             //id
-            "provider":"",
-            "username":""
+            "provider": "",
+            "username": ""
         };
     };
     this.Location = function() {
@@ -153,44 +153,43 @@ app.service("ninja.shout.local.settings", ["$cookieStore", "ninja.shout.cookies"
 }]);
 
 app.service("ninja.shout.api.auth", ["$firebaseAuth", "ninja.shout.defaults",
-    "ninja.shout.constants.urls.twitter","ninja.shout.api.users", "ninja.shout.api.raw.ref",
+    "ninja.shout.constants.urls.twitter", "ninja.shout.api.users", "ninja.shout.api.raw.ref",
     function($firebaseAuth, defaults, twitterURL, users, ref) {
         this.__auth = $firebaseAuth(ref);
-        
-        var fixUsername = function (username,provider) {
-            return "@"+username;
+
+        var fixUsername = function(username, provider) {
+            return "@" + username;
         };
 
         this.__auth.$onAuth(function(authData) {
             if (authData) {
                 var user = new defaults.User();
-                user.uid=authData.uid;
+                user.uid = authData.uid;
                 user.provider = authData.provider;
-                user.username = fixUsername(authData[authData.provider].username,authData.provider);
-                users.$set(authData.uid,user);
+                user.username = fixUsername(authData[authData.provider].username, authData.provider);
+                users.$set(authData.uid, user);
             }
         });
 
         this.auth = function(provider) {
             if (!provider) provider = "twitter";
 
-            return this.__auth.$authWithOAuthPopup(provider).then(function(authData) {
-            }).catch(function(e) {
+            return this.__auth.$authWithOAuthPopup(provider).then(function(authData) {}).catch(function(e) {
                 alert("Authorization failed.");
             });
         };
 
         this.getAuth = function(authData) {
-            if (!authData) authData=this.__auth;
+            if (!authData) authData = this.__auth;
             if (authData.$getAuth()) {
                 authData.$getAuth().getUsername = function() {
-                    return fixUsername(this[this.provider].username,this.provider);
+                    return fixUsername(this[this.provider].username, this.provider);
                 };
                 authData.$getAuth().getImage = function() {
                     return this.twitter.cachedUserProfile.profile_image_url_https;
                 };
                 authData.$getAuth().getURL = function() {
-                    return twitterURL+"/"+this.twitter.username;
+                    return twitterURL + "/" + this.twitter.username;
                 };
                 return authData.$getAuth();
             }
@@ -212,15 +211,15 @@ app.controller("ninja.shout.chats", ["$scope", "$rootScope", "ninja.shout.api.au
         }, function() {
             var usernameImageMapping = usernameImageMap.$getRecord($scope.formData.user.username.toLowerCase());
             $scope.formData.user.image = "";
-            $scope.formData.user.uid="";
-            $scope.formData.user.href="";
+            $scope.formData.user.uid = "";
+            $scope.formData.user.href = "";
             if (usernameImageMapping) {
                 $scope.formData.user.image = usernameImageMapping.$value;
             }
             else if (auth.getAuth() && auth.getAuth().getUsername() == $scope.formData.user.username) {
                 $scope.formData.user.image = auth.getAuth().getImage();
-                $scope.formData.user.uid=auth.getAuth().uid;
-                $scope.formData.user.href=auth.getAuth().getURL();
+                $scope.formData.user.uid = auth.getAuth().uid;
+                $scope.formData.user.href = auth.getAuth().getURL();
             }
             else {
                 $scope.formData.user.image = defaults.Chat().user.image;
@@ -245,6 +244,10 @@ app.controller("ninja.shout.chats", ["$scope", "$rootScope", "ninja.shout.api.au
     }
 ]);
 
+app.controller("ninja.shout.index.comments", ["$scope", function() {
+
+}]);
+
 app.controller("ninja.shout.index", ["$scope", "$rootScope", "$location", "ninja.shout.local.settings", "ninja.shout.api.auth",
     function($scope, $rootScope, $location, localSettings, auth) {
         $scope.$location = $location;
@@ -267,8 +270,8 @@ app.controller("ninja.shout.index", ["$scope", "$rootScope", "$location", "ninja
     }
 ]);
 
-app.controller("ninja.shout.index.help",["$scope","$routeParams", function($scope,$routeParams) {
-    $scope.helpPath="/help/"+$routeParams.help_path+".html";
+app.controller("ninja.shout.index.help", ["$scope", "$routeParams", function($scope, $routeParams) {
+    $scope.helpPath = "/help/" + $routeParams.help_path + ".html";
 }]);
 
 app.controller("ninja.shout.index.chats", function() {
@@ -291,8 +294,8 @@ app.controller("ninja.shout.index.settings", ["$scope", "$rootScope", "ninja.sho
 ]);
 
 app.controller("ninja.shout.index.events", ["$scope", "$rootScope", "$location",
-"ninja.shout.defaults", "ninja.shout.api.events", "ninja.shout.api.events.votes",
-"ninja.shout.api.auth",
+    "ninja.shout.defaults", "ninja.shout.api.events", "ninja.shout.api.events.votes",
+    "ninja.shout.api.auth",
     function($scope, $rootScope, $location, defaults, events, votes, auth) {
         $scope.events = events;
         $scope.searchText = "";
@@ -300,7 +303,7 @@ app.controller("ninja.shout.index.events", ["$scope", "$rootScope", "$location",
         $scope.submitForm = function() {
             if (auth.getAuth()) {
                 $scope.events.$add($scope.formData);
-                
+
                 $scope.resetForm();
             }
             else {
@@ -321,13 +324,13 @@ app.controller("ninja.shout.index.events", ["$scope", "$rootScope", "$location",
             return $scope.getVotes(e).$asArray();
         }
         $scope.addVote = function(event) {
-            if(auth.getAuth()) {
-                var votesArray=$scope.getVotes(event);
+            if (auth.getAuth()) {
+                var votesArray = $scope.getVotes(event);
                 var vote = new defaults.User();
                 vote.uid = auth.getAuth().uid;
                 vote.username = auth.getAuth().getUsername();
                 vote.provider = auth.getAuth().provider;
-                votesArray.$set(vote.uid,vote);
+                votesArray.$set(vote.uid, vote);
             }
             else {
                 alert('You need to be signed in first before doing that.')
@@ -337,17 +340,17 @@ app.controller("ninja.shout.index.events", ["$scope", "$rootScope", "$location",
     }
 ]);
 
-app.controller("ninja.shout.index.events.event", ["$scope","$rootScope",
-"ninja.shout.defaults", "ninja.shout.api.events", "ninja.shout.api.events.votes",
-"ninja.shout.api.auth",
+app.controller("ninja.shout.index.events.event", ["$scope", "$rootScope",
+    "ninja.shout.defaults", "ninja.shout.api.events", "ninja.shout.api.events.votes",
+    "ninja.shout.api.auth",
     function($scope, $rootScope, defaults, events, votes, auth) {
         $scope.getVotesArray($scope.event).$loaded(function(votes) {
-            $scope.event.voteCount=votes.length;
-            $scope.voteCount=votes.length;
+            $scope.event.voteCount = votes.length;
+            $scope.voteCount = votes.length;
             votes.$watch(function(e) {
-                $rootScope.$apply(function (){
-                    $scope.voteCount=votes.length;
-                    $scope.event.voteCount=votes.length;
+                $rootScope.$apply(function() {
+                    $scope.voteCount = votes.length;
+                    $scope.event.voteCount = votes.length;
                 });
             });
         });
@@ -356,7 +359,7 @@ app.controller("ninja.shout.index.events.event", ["$scope","$rootScope",
 
 app.controller("ninja.shout.index.event", ["$scope", "$location", "$routeParams", "ninja.shout.api.events",
     function($scope, $location, $routeParams, events) {
-        $scope.$location = $location;   
+        $scope.$location = $location;
         events.$loaded(function() {
             $scope.event = events.$getRecord($routeParams.event_id);
         });
@@ -366,6 +369,8 @@ app.controller("ninja.shout.index.event", ["$scope", "$location", "$routeParams"
     }
 ]);
 
+
+
 app.directive("shoutNinjaChat", function() {
     return {
         scope: {
@@ -373,4 +378,4 @@ app.directive("shoutNinjaChat", function() {
         },
         templateUrl: 'fragment_chats.html'
     };
-}); 
+});

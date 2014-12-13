@@ -150,9 +150,7 @@ td {
     font-size: 25px;
 }
 /* ---------Chat Styling--------- */
-.chats {
-    display: block;
-}
+
 .chat-text {
     text-align: center;
     line-height: 1.5em;
@@ -230,6 +228,7 @@ hr {
     float: none;
     margin: 0 auto;
     display: block;
+    overflow-x: none;
 }
 .chatsSidebar {
     height: 100%;
@@ -237,8 +236,10 @@ hr {
     float: right;
 }
 .chatScroller {
-    overflow:scroll;
     height:50%;
+    overflow-y: scroll;
+    max-width: 75%;
+    overflow-x: none;
 }
 .event-name {
     height:32px;
