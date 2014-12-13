@@ -37,7 +37,7 @@
                 vote.uid = auth.getAuth().uid;
                 vote.username = auth.getAuth().getUsername();
                 vote.provider = auth.getAuth().provider;
-                voteArray.$set(vote.uid, vote);
+                votesArray.$set(vote.uid, vote);
 
             }
         };
