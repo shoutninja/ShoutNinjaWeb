@@ -1,5 +1,17 @@
 <h3 style="text-align: center; padding: 25px">Settings</h3>
 <div class="panel primary">
+    <div class="panel-heading"><b>Filtering</b></div>
+    <div class="panel-body">
+        <span ng-hide="authData">You can filter events without an owner (a.k.a) events that are probably spam.</span>
+        <span ng-show="authData">You are currently blocking events without an owner.</span>
+        <br/><br/>
+        <span>In order for an event to hve an owner, you user must me authenticated (I.E. using twitter integration)</span>
+        <br/><br/>
+        <button ng-hide="authData" ng-click="login()" class="btn btn-primary">Integrate Twitter</button>
+        <button ng-show="authData" ng-click="logout()" class="btn">Twitter Log Out</button>
+    </div>
+</div>
+<div class="panel primary">
     <div class="panel-heading"><b>Twitter Integration</b></div>
     <div class="panel-body">
         <span ng-hide="authData">You can authenticate using your twitter account in order to verify where your messages are coming from.</span>

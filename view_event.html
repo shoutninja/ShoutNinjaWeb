@@ -22,7 +22,10 @@
 <form>
     <input type="text" ng-model="comment.text">
     <button ng-click="addComment()">Add Comment</button>
+    <br>
+    <small>By adding comments, you must be signed into twitter.</small>
 </form>
+<br>
 <button class="btn" ng-click="$location.path('/events')">Back</button>
 </div>
 <div shout-ninja-chat sidebar="true"></div>
