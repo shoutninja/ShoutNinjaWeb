@@ -352,7 +352,7 @@ app.controller("ninja.shout.index.events.event", ["$scope", "$rootScope",
                     $scope.voteCount = votes.length;
                     $scope.event.voteCount = votes.length;
                 });
-            });
+            });eakjb
         });
     }
 ]);
