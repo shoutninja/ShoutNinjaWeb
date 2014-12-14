@@ -38,6 +38,11 @@ app.controller("ninja.shout.chats", ["$scope", "$rootScope", "ninja.shout.api.au
             });
             $scope.resetForm();
         };
+        
+        $scope.toDate = function(chat) {
+            return new Date(chat.timestamp);
+        };
+        
         $scope.resetForm = function() {
             $scope.formData.text = defaults.Chat().text;
             $scope.formData.user.uid = defaults.Chat().user.uid;

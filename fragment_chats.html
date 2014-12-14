@@ -9,6 +9,8 @@
                 <a href ng-click="$location.path('/help/verifiedUsers')">
                     <i ng-show="chat.user.uid" class="fa fa-check-square"></i>
                 </a>
+                <br/>
+                <span ng-bind="toDate(chat) | date:'MMM d, y h:mm a'" style="font-size:8pt"></span>
                 <br>
                 <span ng-bind="chat.text"></span>
                 <br>
