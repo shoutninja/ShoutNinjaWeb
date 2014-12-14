@@ -9,6 +9,7 @@ app.controller("ninja.shout.index.settings", ["$scope", "$rootScope", "ninja.sho
             $scope.localSettings=localSettings;
             $scope.advertisingEnabled=localSettings.getCookieAlias("advertisingEnabled");
             $scope.filterEventsWithoutOwners=localSettings.getCookieAlias("filterEventsWithoutOwners");
+            $scope.disableNotifications=localSettings.getCookieAlias("disableNotifications");
         });
     }
 ]);

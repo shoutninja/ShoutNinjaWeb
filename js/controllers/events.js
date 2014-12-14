@@ -46,7 +46,14 @@ app.controller("ninja.shout.index.events", ["$scope", "$rootScope", "$location",
             $scope.formData = new defaults.Event();
         };
         $scope.deleteEvent = function(event) {
-            $scope.events.$remove(event);
+            if (event.user) {
+                var authData = auth.authMessage();
+                if (authData&&authData.uid==event.user.uid) {
+                    events.$remove(event);
+                }
+            } else {
+                $events.$remove(event);
+            }
         };
         $scope.detailEvent = function(event) {
             $location.path('events/' + event.$id);

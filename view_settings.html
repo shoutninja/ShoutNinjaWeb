@@ -1,17 +1,5 @@
 <h3 style="text-align: center; padding: 25px">Settings</h3>
 <div class="panel primary">
-    <div class="panel-heading"><b>Filtering</b></div>
-    <div class="panel-body">
-        <span ng-hide="authData">You can filter events without an owner (a.k.a) events that are probably spam.</span>
-        <span ng-show="authData">You are currently blocking events without an owner.</span>
-        <br/><br/>
-        <span>In order for an event to hve an owner, you user must me authenticated (I.E. using twitter integration)</span>
-        <br/><br/>
-        <button ng-hide="filterEventsWithoutOwners" ng-click="localSettings.setCookieAlias('filterEventsWithoutOwners',true)" class="btn btn-primary">Filter Events Without Owners</button>
-        <button ng-show="filterEventsWithoutOwners" ng-click="localSettings.setCookieAlias('filterEventsWithoutOwners',false)" class="btn">Restore Events Without Owners</button>
-    </div>
-</div>
-<div class="panel primary">
     <div class="panel-heading"><b>Twitter Integration</b></div>
     <div class="panel-body">
         <span ng-hide="authData">You can authenticate using your twitter account in order to verify where your messages are coming from.</span>
@@ -20,6 +8,16 @@
         <br/><br/>
         <button ng-hide="authData" ng-click="login()" class="btn btn-primary">Integrate Twitter</button>
         <button ng-show="authData" ng-click="logout()" class="btn">Twitter Log Out</button>
+    </div>
+</div>
+<div class="panel primary">
+    <div class="panel-heading"><b>Mute Notifications</b></div>
+    <div class="panel-body">
+        <span ng-hide="disableNotifications">You can mute native notifications coming from shout.ninja.</span>
+        <span ng-show="disableNotifications">Native notifications are currently muted.</span>
+        <br/><br/>
+        <button ng-hide="disableNotifications" ng-click="localSettings.setCookieAlias('disableNotifications',true)" class="btn btn-primary">Mute Notifications</button>
+        <button ng-show="disableNotifications" ng-click="localSettings.setCookieAlias('disableNotifications',false)" class="btn">Unmute Notifications</button>
     </div>
 </div>
 <div class="panel primary">
@@ -35,6 +33,18 @@
         <br/><br/>
         <button ng-hide="advertisingEnabled" ng-click="localSettings.setCookieAlias('advertisingEnabled',true)" class="btn btn-primary">Opt-In To Advertising</button>
         <button ng-show="advertisingEnabled" ng-click="localSettings.setCookieAlias('advertisingEnabled',false)" class="btn">Opt-Out Of Advertising</button>
+    </div>
+</div>
+<div class="panel primary">
+    <div class="panel-heading"><b>Filtering</b></div>
+    <div class="panel-body">
+        <span ng-hide="authData">You can filter events without an owner (a.k.a) events that are probably spam.</span>
+        <span ng-show="authData">You are currently blocking events without an owner.</span>
+        <br/><br/>
+        <span>In order for an event to hve an owner, you user must me authenticated (I.E. using twitter integration)</span>
+        <br/><br/>
+        <button ng-hide="filterEventsWithoutOwners" ng-click="localSettings.setCookieAlias('filterEventsWithoutOwners',true)" class="btn btn-primary">Filter Events Without Owners</button>
+        <button ng-show="filterEventsWithoutOwners" ng-click="localSettings.setCookieAlias('filterEventsWithoutOwners',false)" class="btn">Restore Events Without Owners</button>
     </div>
 </div>
 <div class="panel primary">

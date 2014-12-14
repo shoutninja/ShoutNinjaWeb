@@ -4,8 +4,8 @@
  * I.E.The list controller, detail controller, and other helper controllers.
  */
 app.controller("ninja.shout.chats", ["$scope", "$rootScope", "ninja.shout.api.auth", "ninja.shout.defaults",
-    "ninja.shout.api.settings.usernameImageMap", "ninja.shout.api.chats",
-    function($scope, $rootScope, auth, defaults, usernameImageMap, chats) {
+    "ninja.shout.api.settings.usernameImageMap", "ninja.shout.api.chats", "ninja.shout.local.notifications",
+    function($scope, $rootScope, auth, defaults, usernameImageMap, chats, notifications) {
         $scope.chats = chats;
 
         $rootScope.$watch(function() {
@@ -33,7 +33,9 @@ app.controller("ninja.shout.chats", ["$scope", "$rootScope", "ninja.shout.api.au
                 $scope.formData.user.provider = auth.getAuth().provider;
                 $scope.formData.user.href = auth.getAuth().getURL();
             }
-            $scope.chats.$add($scope.formData);
+            $scope.chats.$add($scope.formData).then(function (ref) {
+                notifications.bannedChatNotifications.push(ref.key());
+            });
             $scope.resetForm();
         };
         $scope.resetForm = function() {

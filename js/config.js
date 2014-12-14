@@ -13,6 +13,8 @@ app.constant("ninja.shout.constants.urls.twitter", "https://twitter.com");
 //Cookie prefix
 app.constant("ninja.shout.constants.local.cookies.prefix", "ninja.shout.local.cookie");
 
+app.constant("ninja.shout.constants.local.notifications.length", 2000);
+
 //API Urls
 app.service("ninja.shout.urls", ["ninja.shout.constants.urls.firebase", function(fbURL) {
     this.events = fbURL + "/events";
