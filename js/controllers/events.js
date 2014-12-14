@@ -52,7 +52,7 @@ app.controller("ninja.shout.index.events", ["$scope", "$rootScope", "$location",
                     events.$remove(event);
                 }
             } else {
-                $events.$remove(event);
+                events.$remove(event);
             }
         };
         $scope.detailEvent = function(event) {
