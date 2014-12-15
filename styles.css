@@ -1,10 +1,14 @@
 /* ---------Body styling--------- */
-html {
-    height:100%;
-}
-body {
+html, body {
     height:100%;
     background-color: #ecf0f1;
+    overflow-y:hidden;
+}
+/* Allow scrolling if the device isn't tall enough to  */
+@media all and (max-height: 550px){
+    body {
+        overflow-y:scroll;
+    }
 }
 a {
     color: #000000;
@@ -137,6 +141,7 @@ td {
 .main-view {
     float:left;
     width:100%;
+    height:100%;
 }
 .event-text {
     width:90%;
@@ -262,6 +267,8 @@ hr {
       text-align: center;
       margin: 0 auto;
       width: 100%;
+      hieght:100%;
+      overflow-y:scroll;
   }
   .chatsSidebar {
       display: none;
