@@ -11,13 +11,15 @@
     </div>
 </div>
 <div class="panel primary">
-    <div class="panel-heading"><b>Mute Notifications</b></div>
+    <div class="panel-heading"><b>Notifications</b></div>
     <div class="panel-body">
         <span ng-hide="disableNotifications">You can mute native notifications coming from shout.ninja.</span>
         <span ng-show="disableNotifications">Native notifications are currently muted.</span>
+        <span ng-show="!isNotificationPermissionGranted()"><br/>Native notifications not allowed by your browser. (Internet Explorer is not supported).</span>
         <br/><br/>
-        <button ng-hide="disableNotifications" ng-click="localSettings.setCookieAlias('disableNotifications',true)" class="btn btn-primary">Mute Notifications</button>
-        <button ng-show="disableNotifications" ng-click="localSettings.setCookieAlias('disableNotifications',false)" class="btn">Unmute Notifications</button>
+        <button ng-hide="disableNotifications&&!isNotificationPermissionGranted()" ng-click="localSettings.setCookieAlias('disableNotifications',true)" class="btn btn-primary">Mute Notifications</button>
+        <button ng-hide="isNotificationPermissionGranted()" ng-click="notifications.requestPermission()" class="btn btn-primary">Request Permission</button>
+        <button ng-show="disableNotifications&&isNotificationPermissionGranted()" ng-click="localSettings.setCookieAlias('disableNotifications',false)" class="btn">Enable Notifications</button>
     </div>
 </div>
 <div class="panel primary">

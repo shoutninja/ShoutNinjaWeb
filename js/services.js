@@ -12,6 +12,11 @@ app.service("ninja.shout.cookies", ["ninja.shout.constants.local.cookies.prefix"
 app.service("ninja.shout.local.notifications", ["$window", "ninja.shout.constants.local.notifications.length",
 function($window, length) {
     this.bannedChatNotifications=[];
+    
+    var requestPermission = function () {
+        $window.Notification.requestPermission();
+    };
+    
     if ($window.Notification) {
         var attemptNotification = function(title, body) {
             var n = new $window.Notification(title, body);
@@ -25,12 +30,14 @@ function($window, length) {
         };
 
         if ($window.Notification.permission === "default") {
-            $window.Notification.requestPermission();
+            requestPermission();
         }
 
         this.isPermissionGranted = function() {
             return $window.Notification.permission == "granted";
         };
+        
+        this.requestPermission=requestPermission;
 
         this.attemptNotification = attemptNotification;
     }
