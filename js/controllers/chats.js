@@ -23,19 +23,26 @@ app.controller("ninja.shout.chats", ["$scope", "$rootScope", "ninja.shout.api.au
             else {
                 $scope.formData.user.image = defaults.Chat().user.image;
             }
+            
+            $scope.auth=auth.getAuth();
         });
 
         $scope.submitForm = function() {
-            $scope.formData.timestamp=Firebase.ServerValue.TIMESTAMP;
-            if (auth.getAuth() && auth.getAuth().getUsername() === $scope.formData.user.username) {
-                $scope.formData.user.image = auth.getAuth().getImage();
-                $scope.formData.user.uid = auth.getAuth().uid;
-                $scope.formData.user.provider = auth.getAuth().provider;
-                $scope.formData.user.href = auth.getAuth().getURL();
+            if (auth.authMessage()) {
+                $scope.formData.timestamp=Firebase.ServerValue.TIMESTAMP;
+                
+                if (auth.getAuth() && auth.getAuth().getUsername() === $scope.formData.user.username) {
+                    $scope.formData.user.image = auth.getAuth().getImage();
+                    $scope.formData.user.uid = auth.getAuth().uid;
+                    $scope.formData.user.provider = auth.getAuth().provider;
+                    $scope.formData.user.href = auth.getAuth().getURL();
+                }
+                
+                $scope.chats.$add($scope.formData).then(function (ref) {
+                    notifications.bannedChatNotifications.push(ref.key());
+                });
             }
-            $scope.chats.$add($scope.formData).then(function (ref) {
-                notifications.bannedChatNotifications.push(ref.key());
-            });
+                
             $scope.resetForm();
         };
         

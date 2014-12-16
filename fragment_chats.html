@@ -18,7 +18,7 @@
             </div>
         </div>
     </div>
-    <form class="addChats">
+    <form ng-show="auth" class="addChats">
         <div class="chat-row">
             <input type="text" ng-model="formData.text" placeholder="Don't Ninja and Drive." class="chat-text"/>
         </div>
@@ -29,4 +29,7 @@
         </div>
         <button class="btn btn-warning addChatBtn" ng-click="clearChats()"><i class="fa fa-times"></i></button>
     </form>
+    <div ng-hide="auth">
+        <h4><i>You must be authenticated and approved to send messages. Login with Twitter (in settings) then email <a href="mailto:jake@shout.ninja">jake@shout.ninja</a> to get approved.</i></h4>
+    </div>
 </div>
