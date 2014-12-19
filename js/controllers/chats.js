@@ -28,7 +28,7 @@ app.controller("ninja.shout.chats", ["$scope", "$rootScope", "ninja.shout.api.au
         });
 
         $scope.submitForm = function() {
-            if (auth.authMessage()) {
+            //if (auth.authMessage()) { - uncomment to enable twitter filtering on client side
                 $scope.formData.timestamp=Firebase.ServerValue.TIMESTAMP;
                 
                 if (auth.getAuth() && auth.getAuth().getUsername() === $scope.formData.user.username) {
@@ -41,7 +41,7 @@ app.controller("ninja.shout.chats", ["$scope", "$rootScope", "ninja.shout.api.au
                 $scope.chats.$add($scope.formData).then(function (ref) {
                     notifications.bannedChatNotifications.push(ref.key());
                 });
-            }
+            //}
                 
             $scope.resetForm();
         };
