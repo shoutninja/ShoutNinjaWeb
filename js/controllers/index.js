@@ -10,6 +10,7 @@ app.controller("ninja.shout.index", ["$scope", "$rootScope", "$location", "ninja
             return localSettings.getCookieAlias("advertisingEnabled");
         }, function(val) {
             $scope.advertisingEnabled = val;
+            $scope.mainViewClass = val ? "main-view-ad" : "main-view-no-ad";
         });
         $rootScope.$watch(function() {
             if (auth.getAuth()) return auth.getAuth().uid;
