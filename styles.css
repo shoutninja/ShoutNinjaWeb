@@ -6,7 +6,7 @@ html, body {
 }
 .contentContainer {
     overflow-y:scroll;
-    height:100%;
+    height:90%;
 }
 /* Allow scrolling if the device isn't tall enough to  */
 @media all and (max-height: 550px){

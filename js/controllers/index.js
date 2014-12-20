@@ -9,7 +9,7 @@ app.controller("ninja.shout.index", ["$scope", "$rootScope", "$location", "ninja
         $rootScope.$watch(function() {
             return localSettings.getCookieAlias("advertisingEnabled");
         }, function(val) {
-            $scope.advertisingEnabled = val
+            $scope.advertisingEnabled = val;
         });
         $rootScope.$watch(function() {
             if (auth.getAuth()) return auth.getAuth().uid;
