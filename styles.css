@@ -4,6 +4,10 @@ html, body {
     background-color: #ecf0f1;
     overflow-y:hidden;
 }
+.contentContainer {
+    overflow-y:scroll;
+    height:100%;
+}
 /* Allow scrolling if the device isn't tall enough to  */
 @media all and (max-height: 550px){
     body {

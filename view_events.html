@@ -1,20 +1,17 @@
 <div class="mainevents">
   <div ng-show="advertisingEnabled" class="ad-leftskyscraper">
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- Shout.Ninja Skyscraper -->
-<ins class="adsbygoogle"
-     style="display:inline-block;width:300px;height:600px"
-     data-ad-client="ca-pub-5245891708948785"
-     data-ad-slot="5131512110"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-</div>
-  <div style="margin-left: 5%; margin-right: 5%">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Shout.Ninja Skyscraper -->
+    <ins class="adsbygoogle" style="display:inline-block;width:300px;height:600px" data-ad-client="ca-pub-5245891708948785" data-ad-slot="5131512110"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+  <div class="contentContainer" style="margin-left: 5%; margin-right: 5%">
     <div class="event-rows">
       <h3>Events</h3>
       <form class="event-form">
-        <input type="text" placeholder="Search" class="form-controller form-control event-text" ng-model="searchText"/>
+        <input type="text" placeholder="Search" class="form-controller form-control event-text" ng-model="searchText" />
       </form>
       <br>
       <br>
@@ -22,31 +19,30 @@
     </div>
     <div class="event-rows">
       <form class="event-form">
-        <input type="text" ng-model="formData.name" class="form-controller form-control event-text" placeholder="Name"/>
+        <input type="text" ng-model="formData.name" class="form-controller form-control event-text" placeholder="Name" />
         <br>
-        <input type="text" ng-model="formData.description"  class="form-controller form-control event-text" placeholder="Description"/>
+        <input type="text" ng-model="formData.description" class="form-controller form-control event-text" placeholder="Description" />
         <br>
         <button ng-click="submitForm()" class="submitFormBtn">Submit</button>
       </form>
     </div>
     <div ng-repeat="event in events | filter:searchText | orderBy:'voteCount':true" ng-controller="ninja.shout.index.events.event" class="event-rows">
       <h3><span class="event-name" ng-bind="event.name"></span></h3>
-      <p><span class="event-description" ng-bind="event.description"></span></p>
+      <p><span class="event-description" ng-bind="event.description"></span>
+      </p>
       <div>
         <div class="box box1" ng-click="addVote(event)">
           <i class="fa fa-heart fa-vote"></i>
           <br>
-          <span  style="text-align:center" ng-bind="voteCount"></span>
+          <span style="text-align:center" ng-bind="voteCount"></span>
         </div>
         <div class="box box2" ng-click="detailEvent(event)">
           <i class="fa fa-info"></i>
-          <br>
-          Info
+          <br> Info
         </div>
         <div class="box box3" ng-click="deleteEvent(event)">
           <i class="fa fa-trash"></i>
-          <br>
-          Delete
+          <br> Delete
         </div>
       </div>
     </div>
