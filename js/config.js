@@ -4,17 +4,6 @@
  * I.E. constants and database URLs.
  */
 
-//Declare angular app
-var app = angular.module("ninja.shout", ["ngRoute", "ngCookies", "luegg.directives", "firebase"]);
-
-//Base API Urls
-app.constant("ninja.shout.constants.urls.firebase", "https://eakjb-shout-ninja2.firebaseio.com");
-app.constant("ninja.shout.constants.urls.twitter", "https://twitter.com");
-//Cookie prefix
-app.constant("ninja.shout.constants.local.cookies.prefix", "ninja.shout.local.cookie");
-
-app.constant("ninja.shout.constants.local.notifications.length", 2000);
-
 //API Urls
 app.service("ninja.shout.urls", ["ninja.shout.constants.urls.firebase", function(fbURL) {
     this.events = fbURL + "/events";
@@ -45,6 +34,9 @@ app.config(function($routeProvider) {
         .when('/chats', {
             controller: 'ninja.shout.index.chats',
             templateUrl: 'view_chats.html'
+        }).when('/lynx', {
+            controller: 'ninja.shout.index.lynx',
+            templateUrl: 'view_lynx.html'
         })
         .when('/help/:help_path', {
             controller: 'ninja.shout.index.help',

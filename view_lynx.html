@@ -1,0 +1,22 @@
+<div class="lynx-mainInput">
+    <div class="lynx-logo">
+        <img src="img/Lynx_0.1.png" width="128" height="128" alt="Lynx"/>
+        <span class="lynx-logo-text">Lynx</span>
+    </div>
+    <form name="lynxMain" novalidate>
+        <div class="input-group">
+            <input name="lynxMainUrl"
+                type="url"
+                class="form-control"
+                ng-model="formData.url"
+                placeholder="http://"
+                required/>
+            <span class="input-group-btn">
+                <button class="btn" ng-click="submitForm()" ng-disabled="lynxMain.$invalid">Submit</button>
+            </span>
+        </div>
+    </form>
+</div>
+<div class="lynx-mainGo">
+    <button class="btn btn-primary" ng-click="go()">Take Me Somewhere</button>
+</div>

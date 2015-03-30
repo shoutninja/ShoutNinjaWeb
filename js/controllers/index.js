@@ -35,3 +35,23 @@ app.controller("ninja.shout.index.help", ["$scope", "$routeParams", function($sc
 app.controller("ninja.shout.index.chats", function() {
     //Exists mostly because it should.
 });
+
+app.controller("ninja.shout.index.lynx", ["$scope", "$window", "ninja.shout.lynx.abstract",
+    function($scope, $window, abstract) {
+        $scope.formData = {
+            url:""
+        }
+        
+        $scope.submitForm = function() {
+            abstract.submit($scope.formData.url,function() {
+                $scope.formData.url="";
+            },function() {
+                $window.alert("Error Submitting URL. Please contact info@shout.ninja.");
+            });
+        };
+
+        $scope.go = function() {
+            $window.location.assign(abstract.getUrl());
+        };
+    }
+]);

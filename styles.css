@@ -305,3 +305,21 @@ hr {
       display: none;
   }
 }
+
+/* Lynx Begins Here*/
+.lynx-mainInput {
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-top: 3%;
+}
+.lynx-mainGo {
+    text-align: center;
+    margin-top: 3%;
+}
+.lynx-logo {
+    margin-bottom: 3%;
+}
+.lynx-logo-text {
+    font-size: 128px;
+    vertical-align: middle;
+}
