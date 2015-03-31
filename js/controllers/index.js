@@ -36,8 +36,8 @@ app.controller("ninja.shout.index.chats", function() {
     //Exists mostly because it should.
 });
 
-app.controller("ninja.shout.index.lynx", ["$scope", "$window", "ninja.shout.lynx.abstract",
-    function($scope, $window, abstract) {
+app.controller("ninja.shout.index.lynx", ["$scope", "$window", "ninja.shout.lynx.abstract", "ninja.shout.local.notifications",
+    function($scope, $window, abstract, notifications) {
         $scope.formData = {
             url:""
         }
@@ -45,8 +45,17 @@ app.controller("ninja.shout.index.lynx", ["$scope", "$window", "ninja.shout.lynx
         $scope.submitForm = function() {
             abstract.submit($scope.formData.url,function() {
                 $scope.formData.url="";
+                notifications.attemptNotification("Success",{
+                                        body: "Your page was successfully submitted.",
+                                        tag: "_success",
+                                        icon: "img/Lynx_0.1.png"
+                                    });
             },function() {
-                $window.alert("Error Submitting URL. Please contact info@shout.ninja.");
+                notifications.attemptNotification("Error",{
+                                        body: "Your page submission was unsuccessful.",
+                                        tag: "_fail",
+                                        icon: "img/Lynx_0.1.png"
+                                    });
             });
         };
 
