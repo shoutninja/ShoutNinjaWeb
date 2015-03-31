@@ -318,8 +318,15 @@ hr {
 }
 .lynx-logo {
     margin-bottom: 3%;
+    position:relative;
 }
 .lynx-logo-text {
     font-size: 128px;
     vertical-align: middle;
+}
+.lynx-logo-subtext {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 36px;
+  margin-left: 10px;
 }

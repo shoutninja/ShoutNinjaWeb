@@ -7,6 +7,10 @@ app.factory("ninja.shout.lynx.api.forum", ["$firebase", "ninja.shout.lynx.urls",
 }]);
 app.service("ninja.shout.lynx.abstract", ["ninja.shout.lynx.api.forum", function(forum) {
     this.allowedPrefixes = ["http://","https://"];
+    this.getPostCount = function () {
+        return forum.length;
+    };
+    
     this.isValid = function(url) {
         var valid = false;
         angular.forEach(this.allowedPrefixes, function(prefix) {

@@ -36,8 +36,12 @@ app.controller("ninja.shout.index.chats", function() {
     //Exists mostly because it should.
 });
 
-app.controller("ninja.shout.index.lynx", ["$scope", "$window", "ninja.shout.lynx.abstract", "ninja.shout.local.notifications",
-    function($scope, $window, abstract, notifications) {
+app.controller("ninja.shout.index.lynx", ["$scope", "$rootScope", "$window", "ninja.shout.lynx.abstract", "ninja.shout.local.notifications",
+    function($scope, $rootScope, $window, abstract, notifications) {
+        $rootScope.$watch(abstract.getPostCount,function (newVal) {
+            $scope.postCount=newVal;
+        });
+        
         $scope.formData = {
             url:""
         }
