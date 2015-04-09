@@ -22,30 +22,29 @@ app.config(function($routeProvider) {
         .when('/events', {
             controller: 'ninja.shout.index.events',
             templateUrl: 'view_events.html'
-        })
-        .when('/settings', {
+        }).when('/settings', {
             controller: 'ninja.shout.index.settings',
             templateUrl: 'view_settings.html'
-        })
-        .when('/events/:event_id', {
+        }).when('/events/:event_id', {
             controller: 'ninja.shout.index.event',
             templateUrl: 'view_event.html'
-        })
-        .when('/chats', {
+        }).when('/chats', {
             controller: 'ninja.shout.index.chats',
             templateUrl: 'view_chats.html'
         }).when('/lynx', {
             controller: 'ninja.shout.index.lynx',
             templateUrl: 'view_lynx.html'
-        })
-        .when('/help/:help_path', {
+        }).when('/lynx/analysis/:chartType', {
+            controller: 'ninja.shout.index.lynx.analysis',
+            templateUrl: 'view_lynx_analysis.html'
+        }).when('/lynx/analysis/', {
+            redirectTo: 'lynx/analysis/line'
+        }).when('/help/:help_path', {
             controller: 'ninja.shout.index.help',
             templateUrl: 'view_help.html'
-        })
-        .when('/', {
+        }).when('/', {
             redirectTo: '/chats'
-        })
-        .otherwise({
+        }).otherwise({
             redirectTo: '/'
         });
 });

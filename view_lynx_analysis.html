@@ -1,0 +1,51 @@
+<div class="lynx-analysis-content">
+    <div class="col-md-6">
+        <div class="input-group">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
+                        aria-expanded="false">
+                    <span ng-bind="chartType"></span> <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li ng-repeat="myChartType in chartTypes"><a href ng-click="setChartType(myChartType.name)"
+                                                                 ng-bind="myChartType.name"></a></li>
+                </ul>
+            </div>
+
+            <div class="input-daterange input-group" id="datepicker">
+                <input type="text" class="input-sm form-control datepicker" name="start" id="startPicker"/>
+                <span class="input-group-addon">to</span>
+                <input type="text" class="input-sm form-control datepicker" name="end" id="endPicker"/>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        var scope = angular.element('.datepicker').scope();
+        scope.$watch("startDate",function(newVal) {
+            $('#startPicker').datepicker("update",newVal.format('MM-DD-YYYY'));
+        });
+        scope.$watch("endDate",function(newVal) {
+            $('#endPicker').datepicker("update",newVal.format('MM-DD-YYYY'));
+        });
+        $('.datepicker').datepicker()
+                .on("changeDate", function (e) {
+                    scope.$apply(function () {
+                        var startDate = new Date($('#startPicker')[0].value);
+                        var endDate = new Date($('#endPicker')[0].value);
+                        if (!(isNaN(startDate.getTime()) || isNaN(endDate.getTime()))) {
+                            scope.startDate = moment(startDate);
+                            scope.endDate = moment(endDate);
+                        }
+                    });
+                });
+    </script>
+
+    <div ng-show="chartType=='line'">
+        <linechart data="data" options="options"></linechart>
+    </div>
+    <div ng-show="chartType=='pie'">
+        <pie-chart data="data" options="options"></pie-chart>
+    </div>
+</div>
