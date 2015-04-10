@@ -39,6 +39,8 @@ app.controller("ninja.shout.index.chats", function () {
 app.controller("ninja.shout.index.lynx", ["$scope", "$rootScope", "$window", "$location",
     "ninja.shout.lynx.abstract", "ninja.shout.local.notifications",
     function ($scope, $rootScope, $window, $location, abstract, notifications) {
+        $scope.$location=$location;
+
         $rootScope.$watch(abstract.getPostCount, function (newVal) {
             $scope.postCount = newVal;
         });
