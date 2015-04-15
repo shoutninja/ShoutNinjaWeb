@@ -66,8 +66,12 @@ app.controller("ninja.shout.index.lynx", ["$scope", "$rootScope", "$window", "$l
             });
         };
 
-        $scope.go = function () {
-            $window.location.assign(abstract.getUrl());
+        $scope.go = function ($event) {
+            if ($event.shiftKey) {
+                $window.open(abstract.getUrl());
+            } else {
+                $window.location.assign(abstract.getUrl());
+            }
         };
     }
 ]);
@@ -78,13 +82,32 @@ app.controller("ninja.shout.index.lynx.analysis", ["$scope", "$rootScope", "$rou
         $scope.startDate = moment([now.getFullYear(), now.getMonth(), now.getDate()]).subtract(14, "days");
         $scope.endDate = moment([now.getFullYear(), now.getMonth(), now.getDate()]).add(2, "days");
 
-        $scope.regex = new RegExp("((?!-)[A-Za-z0-9-]{1,63}(?!-)\\.)+[A-Za-z]{2,6}");
+        $scope.regex = "((?!-)[A-Za-z0-9-]{1,63}(?!-)\\.)+[A-Za-z]{2,6}";
         $scope.domainCount = 5;
+
+        $scope.admin = $location.search().admin;
 
         $scope.pieChartColorTags = {
             "www.youtube.com": "red",
             "www.bing.com": "blue",
-            "www.google.com": "green"
+            "www.google.com": "green",
+            "imgur.com": "#303030",
+            "i.imgur.com": "#303030"
+        };
+
+        $scope.deletePost = function(post) {
+            forum.$remove(post);
+        };
+
+        $scope.deleteRegex = function () {
+            if (confirm("Are you sure?")) {
+                $scope.forEachInRange(function (post) {
+                    var domains = new RegExp($scope.regex).exec(post.url);
+                    if (domains && domains.length > 0) {
+                        forum.$remove(post);
+                    }
+                });
+            }
         };
 
         $scope.forEachInRange = function (callback) {
@@ -107,23 +130,28 @@ app.controller("ninja.shout.index.lynx.analysis", ["$scope", "$rootScope", "$rou
                 displayName: "Pie",
                 update: function () {
                     var data = {};
+                    $scope.matches = [];
 
                     $scope.forEachInRange(function (post) {
+                        var domains = new RegExp($scope.regex).exec(post.url);
+                        if (domains&&domains.length>0) {
+                            $scope.matches.push(post);
 
-                        var domain = $scope.regex.exec(post.url)[0];
-                        if (!data[domain]) {
-                            data[domain] = 1;
-                        } else {
-                            data[domain]++;
+                            var domain=domains[0];
+                            if (!data[domain]) {
+                                data[domain] = 1;
+                            } else {
+                                data[domain]++;
+                            }
                         }
                     });
 
                     var otherCount;
                     var formattedData;
-                    var minimumSubmissions = 2;
+                    var minimumSubmissions = 1;
 
                     do {
-                        console.log($scope.domainCount+","+minimumSubmissions);
+                        //console.log($scope.domainCount+","+minimumSubmissions);
                         otherCount=0;
                         formattedData = [];
 
@@ -136,6 +164,8 @@ app.controller("ninja.shout.index.lynx.analysis", ["$scope", "$rootScope", "$rou
                                     color = "rgb("+Math.floor(Math.random()*256)+", "+
                                     Math.floor(Math.random()*256)+", "+
                                     Math.floor(Math.random()*256)+")";
+
+                                    $scope.pieChartColorTags[key]=color;
                                 }
 
                                 formattedData.push({label: key, value: data[key], color: color});
@@ -152,6 +182,14 @@ app.controller("ninja.shout.index.lynx.analysis", ["$scope", "$rootScope", "$rou
                     $scope.data = formattedData;
 
                     $scope.options = {thickness: 100};
+
+                    if ($scope.data.length>9) {
+                        $scope.options.thickness=2000;
+                    } else {
+                        for (var i = 6; i < $scope.data.length && $scope.options.thickness > 50; i++) {
+                            $scope.options.thickness -= 20;
+                        }
+                    }
                 }
             },
             line: {

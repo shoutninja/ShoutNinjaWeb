@@ -22,6 +22,11 @@
         <div class="input-group input-group-sm">
             <span class="input-group-addon">Number to Show</span>
             <input type="number" class="input-sm form-control" id="domainCountPicker" ng-model="domainCount"/>
+
+            <span class="input-group-addon" ng-show="admin">Regex</span>
+            <input type="text" class="input-sm form-control" ng-model="regex" ng-show="admin"/>
+            <span class="input-group-addon" ng-show="admin">Actions</span>
+            <button class="btn btn-default form-control" ng-click="deleteRegex()" ng-show="admin">Delete</button>
         </div>
     </div>
 
@@ -51,6 +56,19 @@
         <linechart width="1024" height="500" data="data" options="options"></linechart>
     </div>
     <div ng-show="chartType=='pie'">
-        <pie-chart data="data" options="options"></pie-chart>
+        <div>
+            <pie-chart data="data" options="options"></pie-chart>
+        </div>
+        <div class="col-md-12 lynx-analysis-results" ng-show="admin">
+            <div class="panel panel-default">
+                <div class="panel-heading">Results (<span ng-bind="matches.length"></span>)</div>
+                <table class="table">
+                    <tr ng-repeat="datum in matches">
+                        <td><span class="fa fa-close util-clickable" ng-click="deletePost(datum)"></span></td>
+                        <td><a ng-href="{{ datum.url }}" ng-bind="datum.url"></a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
