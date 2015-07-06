@@ -86,7 +86,9 @@
             <tr ng-repeat="datum in matches | orderBy:sortPosts:true">
                 <td class="col-md-2" ng-bind="datum.submissions||1"></td>
                 <td class="col-md-4" ng-bind="datum.timestamp | date:'medium'"></td>
-                <td class="col-md-6" style="overflow:scroll" ng-bind="datum.url"></td>
+                <td class="col-md-6" style="overflow:scroll">
+                    <a ng-href="{{ datum.url }}" ng-bind="datum.url"></a>
+                </td>
             </tr>
         </table>
     </div>
