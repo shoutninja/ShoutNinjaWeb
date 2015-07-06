@@ -39,7 +39,7 @@ app.controller("ninja.shout.index.chats", function () {
 app.controller("ninja.shout.index.lynx", ["$scope", "$rootScope", "$window", "$location",
     "ninja.shout.lynx.abstract", "ninja.shout.local.notifications",
     function ($scope, $rootScope, $window, $location, abstract, notifications) {
-        $scope.$location=$location;
+        $scope.$location = $location;
 
         $rootScope.$watch(abstract.getPostCount, function (newVal) {
             $scope.postCount = newVal;
@@ -95,7 +95,7 @@ app.controller("ninja.shout.index.lynx.analysis", ["$scope", "$rootScope", "$rou
             "i.imgur.com": "#303030"
         };
 
-        $scope.deletePost = function(post) {
+        $scope.deletePost = function (post) {
             forum.$remove(post);
         };
 
@@ -134,14 +134,14 @@ app.controller("ninja.shout.index.lynx.analysis", ["$scope", "$rootScope", "$rou
 
                     $scope.forEachInRange(function (post) {
                         var domains = new RegExp($scope.regex).exec(post.url);
-                        if (domains&&domains.length>0) {
+                        if (domains && domains.length > 0) {
                             $scope.matches.push(post);
 
-                            var domain=domains[0];
+                            var domain = domains[0];
                             if (!data[domain]) {
                                 data[domain] = 1;
                             } else {
-                                data[domain]++;
+                                data[domain] ++;
                             }
                         }
                     });
@@ -152,7 +152,7 @@ app.controller("ninja.shout.index.lynx.analysis", ["$scope", "$rootScope", "$rou
 
                     do {
                         //console.log($scope.domainCount+","+minimumSubmissions);
-                        otherCount=0;
+                        otherCount = 0;
                         formattedData = [];
 
                         angular.forEach(Object.keys(data), function (key) {
@@ -161,30 +161,40 @@ app.controller("ninja.shout.index.lynx.analysis", ["$scope", "$rootScope", "$rou
                                 if (Object.keys($scope.pieChartColorTags).indexOf(key) > -1) {
                                     color = $scope.pieChartColorTags[key];
                                 } else {
-                                    color = "rgb("+Math.floor(Math.random()*256)+", "+
-                                    Math.floor(Math.random()*256)+", "+
-                                    Math.floor(Math.random()*256)+")";
+                                    color = "rgb(" + Math.floor(Math.random() * 256) + ", " +
+                                        Math.floor(Math.random() * 256) + ", " +
+                                        Math.floor(Math.random() * 256) + ")";
 
-                                    $scope.pieChartColorTags[key]=color;
+                                    $scope.pieChartColorTags[key] = color;
                                 }
 
-                                formattedData.push({label: key, value: data[key], color: color});
+                                formattedData.push({
+                                    label: key,
+                                    value: data[key],
+                                    color: color
+                                });
                             } else {
                                 otherCount++;
                             }
                         });
 
                         minimumSubmissions++;
-                    } while (formattedData.length>$scope.domainCount&&minimumSubmissions>1);
+                    } while (formattedData.length > $scope.domainCount && minimumSubmissions > 1);
 
-                    formattedData.push({label:"Other", value:otherCount, color: "#7E7E7E"});
+                    formattedData.push({
+                        label: "Other",
+                        value: otherCount,
+                        color: "#7E7E7E"
+                    });
 
                     $scope.data = formattedData;
 
-                    $scope.options = {thickness: 100};
+                    $scope.options = {
+                        thickness: 100
+                    };
 
-                    if ($scope.data.length>9) {
-                        $scope.options.thickness=2000;
+                    if ($scope.data.length > 9) {
+                        $scope.options.thickness = 2000;
                     } else {
                         for (var i = 6; i < $scope.data.length && $scope.options.thickness > 50; i++) {
                             $scope.options.thickness -= 20;
@@ -200,7 +210,10 @@ app.controller("ninja.shout.index.lynx.analysis", ["$scope", "$rootScope", "$rou
 
                     var numDays = $scope.endDate.diff($scope.startDate, "days");
                     for (var i = 0; i < numDays; i++) {
-                        $scope.data[i] = {x: i, value: 0};
+                        $scope.data[i] = {
+                            x: i,
+                            value: 0
+                        };
                     }
 
                     $scope.forEachInRange(function (post, postDate) {
@@ -223,22 +236,40 @@ app.controller("ninja.shout.index.lynx.analysis", ["$scope", "$rootScope", "$rou
                         stacks: [],
                         axes: {
                             x: {
-                                type: "linear", key: "x", labelFunction: function (value) {
+                                type: "linear",
+                                key: "x",
+                                labelFunction: function (value) {
                                     return $scope.startDate.clone().add(value, "days").format("dd MM/DD")
                                 }
                             },
-                            y: {type: "linear"}
+                            y: {
+                                type: "linear"
+                            }
                         },
                         lineMode: "linear",
                         tension: 0.7,
                         tooltip: {
-                            mode: "scrubber", formatter: function (x, y, series) {
+                            mode: "scrubber",
+                            formatter: function (x, y, series) {
                                 return $scope.startDate.clone().add(x, "days").format("ddd MM/DD/YYYY") + ": " + y
                             }
                         },
                         drawLegend: true,
                         drawDots: true,
                         columnsHGap: 5
+                    };
+                }
+            },
+            table: {
+                name: "table",
+                displayName: "Table",
+                update: function () {
+                    $scope.matches = [];
+                    $scope.forEachInRange(function(datum) {
+                        $scope.matches.push(datum);
+                    });
+                    $scope.sortPosts = function(datum) {
+                        return parseInt(datum.submissions||'1');
                     };
                 }
             }
@@ -254,7 +285,7 @@ app.controller("ninja.shout.index.lynx.analysis", ["$scope", "$rootScope", "$rou
             $scope.data = [];
             $scope.chartType = $routeParams.chartType;
 
-            if (forum.length>0 && Object.keys($scope.chartTypes).indexOf($routeParams.chartType) > -1)
+            if (forum.length > 0 && Object.keys($scope.chartTypes).indexOf($routeParams.chartType) > -1)
                 $scope.chartTypes[$routeParams.chartType].update();
         });
     }]);

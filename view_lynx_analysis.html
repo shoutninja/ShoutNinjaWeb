@@ -3,28 +3,28 @@
 
         <div class="input-daterange input-group" id="datepicker">
             <div class="input-group-btn input-group-sm">
-                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
-                        aria-expanded="false">
+                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <span ng-bind="chartTypes[chartType].displayName"></span> <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li ng-repeat="myChartType in chartTypes"><a href ng-click="setChartType(myChartType.name)"
-                                                                 ng-bind="myChartType.displayName"></a></li>
+                    <li ng-repeat="myChartType in chartTypes">
+                        <a href ng-click="setChartType(myChartType.name)" ng-bind="myChartType.displayName"></a>
+                    </li>
                 </ul>
             </div>
 
-            <input type="text" class="input-sm form-control datepicker" name="start" id="startPicker"/>
+            <input type="text" class="input-sm form-control datepicker" name="start" id="startPicker" />
             <span class="input-group-addon">to</span>
-            <input type="text" class="input-sm form-control datepicker" name="end" id="endPicker"/>
+            <input type="text" class="input-sm form-control datepicker" name="end" id="endPicker" />
         </div>
     </div>
     <div class="col-md-6" ng-show="chartType=='pie'">
         <div class="input-group input-group-sm">
             <span class="input-group-addon">Number to Show</span>
-            <input type="number" class="input-sm form-control" id="domainCountPicker" ng-model="domainCount"/>
+            <input type="number" class="input-sm form-control" id="domainCountPicker" ng-model="domainCount" />
 
             <span class="input-group-addon" ng-show="admin">Regex</span>
-            <input type="text" class="input-sm form-control" ng-model="regex" ng-show="admin"/>
+            <input type="text" class="input-sm form-control" ng-model="regex" ng-show="admin" />
             <span class="input-group-addon" ng-show="admin">Actions</span>
             <button class="btn btn-default form-control" ng-click="deleteRegex()" ng-show="admin">Delete</button>
         </div>
@@ -40,35 +40,54 @@
             $('#endPicker').datepicker("update", newVal.format('MM-DD-YYYY'));
         });
         $('.datepicker').datepicker()
-                .on("changeDate", function (e) {
-                    scope.$apply(function () {
-                        var startDate = new Date($('#startPicker')[0].value);
-                        var endDate = new Date($('#endPicker')[0].value);
-                        if (!(isNaN(startDate.getTime()) || isNaN(endDate.getTime()))) {
-                            scope.startDate = moment(startDate);
-                            scope.endDate = moment(endDate);
-                        }
-                    });
+            .on("changeDate", function (e) {
+                scope.$apply(function () {
+                    var startDate = new Date($('#startPicker')[0].value);
+                    var endDate = new Date($('#endPicker')[0].value);
+                    if (!(isNaN(startDate.getTime()) || isNaN(endDate.getTime()))) {
+                        scope.startDate = moment(startDate);
+                        scope.endDate = moment(endDate);
+                    }
                 });
+            });
     </script>
 
     <div ng-show="chartType=='line'">
         <linechart width="1024" height="500" data="data" options="options"></linechart>
     </div>
+    
     <div ng-show="chartType=='pie'">
         <div>
             <pie-chart data="data" options="options"></pie-chart>
         </div>
-        <div class="col-md-12 lynx-analysis-results" ng-show="admin">
+        <div class="col-md-12 lynx-analysis-results" ng-if="admin">
             <div class="panel panel-default">
                 <div class="panel-heading">Results (<span ng-bind="matches.length"></span>)</div>
                 <table class="table">
                     <tr ng-repeat="datum in matches">
-                        <td><span class="fa fa-close util-clickable" ng-click="deletePost(datum)"></span></td>
-                        <td><a ng-href="{{ datum.url }}" ng-bind="datum.url"></a></td>
+                        <td><span class="fa fa-close util-clickable" ng-click="deletePost(datum)"></span>
+                        </td>
+                        <td>
+                            <a ng-href="{{ datum.url }}" ng-bind="datum.url"></a>
+                        </td>
                     </tr>
                 </table>
             </div>
         </div>
+    </div>
+    
+    <div ng-if="chartType=='table'" class="col-md-12">
+        <table class="table">
+            <tr>
+                <td class="col-md-2">Dankness</td>
+                <td style="col-md-4">Posted</td>
+                <td style="col-md-6">URL</td>
+            </tr>
+            <tr ng-repeat="datum in matches | orderBy:sortPosts:true">
+                <td class="col-md-2" ng-bind="datum.submissions||1"></td>
+                <td class="col-md-4" ng-bind="datum.timestamp | date:'medium'"></td>
+                <td class="col-md-6" style="overflow:scroll" ng-bind="datum.url"></td>
+            </tr>
+        </table>
     </div>
 </div>
