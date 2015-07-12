@@ -1,3 +1,3 @@
-Shout.ninja
+Shout.Ninja
 ===========
-An innovative new social network from Henry Kaufman and Jake Billings
+An innovative new social network from Henry Kaufman and Jake Billings.
